@@ -1,4 +1,4 @@
-name: Build Observable Framework static site and deploy to GitHub Pages
+name: Publish to GitHub Pages
 
 on:
   # Run on pushes targeting the default branch
