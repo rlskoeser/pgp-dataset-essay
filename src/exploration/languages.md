@@ -54,11 +54,21 @@ const groupTotals = plot_langs.map((x) => ({
 display(upSetPlot(groupTotals, { width: width }));
 ```
 
-## All language combinations
+## All combinations
+
+This table shows all language combinations (primary languages only). Click the headings to change the sorting.
 
 ```js
-//display(Inputs.table(count_by_langset).sort((a, b) => b.total - a.total)));
-display(Inputs.table(count_by_langset)); //.sort((a, b) => a.languages < b.languages)));
+display(
+  Inputs.table(count_by_langset, {
+    select: false,
+    sort: "languages",
+    header: {
+      languages: "Languages",
+      total: "# of documents",
+    },
+  }),
+);
 ```
 
 ---
