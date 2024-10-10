@@ -13,40 +13,64 @@ const mincountInput = Inputs.range(
 const mincount = Generators.input(mincountInput);
 ```
 
-```js
-// TODO: toggle to control whether secondary languages are included
-// languages_secondary
-```
-
 <div class="grid grid-cols-1">
 <div>
 <h2>Language combinations</h2>
 
-Displaying language combinations that occur at least ${ mincount.toLocaleString() } times.
+```js
+// toggle to control whether secondary languages are included
+const showLanguages = view(
+  Inputs.select(["languages_primary", "languages_secondary"], {
+    value: ["languages_primary"],
+    label: "Include languages:",
+    multiple: true,
+  }),
+);
+```
 
 ${mincountInput}
 
+Displaying language combinations from **${ showLanguages.join(", ") }** that occur at least **${ mincount.toLocaleString() } times**.
+(${ lang_documents.length.toLocaleString() } documents)
+
 ```js
 import { upSetPlot } from "/components/upset.js";
-
-const lang_documents = documents.filter((d) => d.languages_primary != "");
-
+const lang_documents = documents.filter((d) => {
+  // secondary lang implies primary; if it is included, filter on that field being not empty
+  if (showLanguages.includes("languages_secondary")) {
+    return d.languages_secondary != "";
+  }
+  // otherwise filter on primary language field
+  return d.languages_primary != "";
+});
 const count_by_langset = d3
   .rollups(
     lang_documents,
     (d) => d.length,
-    (d) => d.languages_primary,
+    (d) => {
+      let documentLangs = [];
+      for (let showLang of showLanguages) {
+        if (d[showLang]) {
+          let languages = d[showLang]
+            .split(",")
+            .map((x) => x.trim())
+            .filter((x) => x != "");
+          documentLangs.push(...languages);
+        }
+      }
+      return documentLangs.join(",");
+    },
   )
-  .map((x) => new Object({ languages: x[0] || "NA", total: x[1] }))
+  .map((x) => new Object({ languages: x[0] || "", total: x[1] }))
   .sort((a, b) => a.total - b.total);
 
 // total in combinations; sort highest count first
-const plot_langs = count_by_langset
+const langGroupCount = count_by_langset
   .filter((x) => x.total >= mincount)
   .sort((a, b) => b.total - a.total);
 
 // rename variable so we pass in group and total
-const groupTotals = plot_langs.map((x) => ({
+const groupTotals = langGroupCount.map((x) => ({
   group: x.languages,
   total: x.total,
 }));
@@ -56,7 +80,8 @@ display(upSetPlot(groupTotals, { width: width }));
 
 ## All combinations
 
-This table shows all language combinations (primary languages only). Click the headings to change the sorting.
+This table shows all language combinations from **${ showLanguages.join(", ") }**.
+Click the headings to change how the table is sorted.
 
 ```js
 display(
