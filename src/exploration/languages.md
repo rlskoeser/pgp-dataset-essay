@@ -18,8 +18,6 @@ const mincount = Generators.input(mincountInput);
 // languages_secondary
 ```
 
-width = ${width}
-
 <div class="grid grid-cols-1">
 <div>
 <h2>Language combinations</h2>
@@ -29,7 +27,7 @@ Displaying language combinations that occur at least ${ mincount.toLocaleString(
 ${mincountInput}
 
 ```js
-import { upSetPlot } from "./components/upset.js";
+import { upSetPlot } from "/components/upset.js";
 
 const lang_documents = documents.filter((d) => d.languages_primary != "");
 
@@ -54,14 +52,12 @@ const groupTotals = plot_langs.map((x) => ({
 }));
 
 display(upSetPlot(groupTotals, { width: width }));
-
-//${resize((width) => Plot.barX([9, 4, 8, 1, 11, 3, 4, 2, 7, 5]).plot({width}))}
 ```
 
 ## All language combinations
 
 ```js
-// display(Inputs.table(count_by_langset)); // .sort((a, b) => b.total - a.total)));
+//display(Inputs.table(count_by_langset).sort((a, b) => b.total - a.total)));
 display(Inputs.table(count_by_langset)); //.sort((a, b) => a.languages < b.languages)));
 ```
 
@@ -71,6 +67,6 @@ display(Inputs.table(count_by_langset)); //.sort((a, b) => a.languages < b.langu
 
 An UpSet plot shows data in more than three overlapping sets. The vertical bar chart in the upper portion of the chart shows the sizes of the groups, the horizontal bar chart at left shows the sizes of the individual sets, and the link chart or matrix shows how the groups combine individual sets.
 
-This UpSet plot is implemented with Observable Plot and is inspired by an [earlier implementation by Torsten Sprenger](https://observablehq.com/@spren9er/upset-plots-with-observable-plot).
+This UpSet plot is implemented with Observable Plot and is inspired by an [implementation by Torsten Sprenger](https://observablehq.com/@spren9er/upset-plots-with-observable-plot).
 
 </div>

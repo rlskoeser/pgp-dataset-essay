@@ -12,6 +12,7 @@ export default {
       pages: [
         { name: "Introduction", path: "/" },
         { name: "Structuring fragmented information", path: "/structuring" },
+        { name: "Data exploration", path: "/exploration/" },
       ],
     },
   ],
