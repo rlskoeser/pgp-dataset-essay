@@ -1,5 +1,7 @@
 # Languages in PGP documents
 
+PGP documents include a range of languages and scripts, and they often occur in combination.
+
 ```js
 const documents = FileAttachment("/data/documents.csv").csv();
 ```
@@ -15,7 +17,7 @@ const mincount = Generators.input(mincountInput);
 
 <div class="grid grid-cols-1">
 <div>
-<h2>Language combinations</h2>
+<h2>UpSet plot</h2>
 
 ```js
 // toggle to control whether secondary languages are included
@@ -78,7 +80,7 @@ const groupTotals = langGroupCount.map((x) => ({
 display(upSetPlot(groupTotals, { width: width }));
 ```
 
-## All combinations
+## Table of combinations and counts
 
 This table shows all language combinations from **${ showLanguages.join(", ") }**.
 Click the headings to change how the table is sorted.
@@ -104,7 +106,7 @@ display(
 
 ---
 
-<div class="note" label="About the UpSet Plot">
+<div class="note" label="About this plot">
 
 An UpSet plot shows data in more than three overlapping sets. The vertical bar chart in the upper portion of the chart shows the sizes of the groups, the horizontal bar chart at left shows the sizes of the individual sets, and the link chart or matrix shows how the groups combine individual sets.
 
