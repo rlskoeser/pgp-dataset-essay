@@ -151,7 +151,7 @@ export function upSetPlot(data, options = {}) {
       axis: null,
       tickSize: 0,
     },
-    width: fullWidth - lowerBarChartWidth,
+    width: fullWidth - lowerBarChartWidth - 40,
     height: lowerChartHeight,
     marginTop: 30,
     marginBottom: 22,
@@ -168,7 +168,9 @@ export function upSetPlot(data, options = {}) {
     ],
   });
 
-  const spacerChart = Plot.plot({ width: lowerBarChartWidth });
+  // to ensure consistent spacing with flex, create a placeholder chart
+  // with the width we need for charts to align
+  const spacerChart = Plot.plot({ width: lowerBarChartWidth - 40 });
 
   // return as html, with a flex div to put lower charts side by side
   return html` <div style="display:flex">
