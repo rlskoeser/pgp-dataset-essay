@@ -84,8 +84,14 @@ This table shows all language combinations from **${ showLanguages.join(", ") }*
 Click the headings to change how the table is sorted.
 
 ```js
+const search = view(
+  Inputs.search(count_by_langset, { placeholder: "Search by language…" }),
+);
+```
+
+```js
 display(
-  Inputs.table(count_by_langset, {
+  Inputs.table(search, {
     select: false,
     sort: "languages",
     header: {
