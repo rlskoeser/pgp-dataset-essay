@@ -80,6 +80,51 @@ const groupTotals = langGroupCount.map((x) => ({
 display(upSetPlot(groupTotals, { width: width }));
 ```
 
+<div id="venn">
+</div>
+
+```js
+import { VennDiagram } from "npm:@upsetjs/venn.js";
+
+// map to format required by venn js
+let languageSets = groupTotals.map((x) => ({
+  sets: x.group.split(",").map((x) => x.trim()),
+  size: x.total,
+}));
+
+// copied from upset component
+const sets = groupTotals.reduce((accumulator, currentValue) => {
+    currentValue.group.split(",").forEach((set) => {
+      set = set.trim();
+      if (accumulator[set] === undefined) {
+        accumulator[set] = 0;
+      }
+      accumulator[set] += currentValue.total;
+    });
+    return accumulator;
+  }, new Object());
+  // restructure into named fields for plotting
+  const set_totals = Object.entries(sets).map(([name, value]) => ({
+    ["set"]: name,
+    total: value,
+  }));
+  
+// get the 4 largest sets
+let topSets = set_totals.slice(0, 4);
+// get a list of language names for the 4 largest sets
+let topLangs = topSets.reduce((accumulator, currentValue) => {
+  accumulator.push(currentValue.set);
+    return accumulator;
+}, new Array());
+
+// filter combinations to groups that only include these top 4 languages
+let topLanguageSets = languageSets.filter(x => x.sets.every(s => topLangs.includes(s)));
+
+var chart = VennDiagram()
+d3.select("#venn").datum(topLanguageSets).call(chart);
+```
+
+
 ## Table of combinations and counts
 
 This table shows all language combinations from **${ showLanguages.join(", ") }**.
