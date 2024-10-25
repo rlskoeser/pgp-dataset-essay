@@ -17,7 +17,7 @@ const mincount = Generators.input(mincountInput);
 
 <div class="grid grid-cols-1">
 <div>
-<h2>UpSet plot</h2>
+<h2>UpSet plot of language combinations</h2>
 
 ```js
 // toggle to control whether secondary languages are included
@@ -80,11 +80,17 @@ const groupTotals = langGroupCount.map((x) => ({
 display(upSetPlot(groupTotals, { width: width }));
 ```
 
+## Venn/Euler diagram of language combinations
+
+Venn diagrams can only show 3-4 sets depending on how they overlap. This is generated from the same information about language combinations.
+
 <div id="venn">
 </div>
 
 ```js
 import { VennDiagram } from "npm:@upsetjs/venn.js";
+
+// FIXME: doesn't work on reload; convert to component and get rid of the div id part?
 
 // map to format required by venn js
 let languageSets = groupTotals.map((x) => ({
@@ -151,7 +157,7 @@ display(
 
 ---
 
-<div class="note" label="About this plot">
+<div class="note" label="About these charts">
 
 An UpSet plot shows data in more than three overlapping sets. The vertical bar chart in the upper portion of the chart shows the sizes of the groups, the horizontal bar chart at left shows the sizes of the individual sets, and the link chart or matrix shows how the groups combine individual sets.
 
