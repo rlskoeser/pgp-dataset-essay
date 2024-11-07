@@ -6,15 +6,31 @@ const documents = FileAttachment("/data/documents.csv").csv();
 
 How many documents have date information?
 
-
 ```js
 const date_fields =['doc_date_standard', 'doc_date_original', 'doc_date_calendar', 'inferred_date_display', 'inferred_date_standard', 'inferred_date_rationale', 'inferred_date_notes'];
 
 // count how many records have content for each field
 let count_by_info = date_fields.map((f) => {
-	return {'field': f, 'count': documents.filter((x) => x[f] != "" && x[f] != null).length}
+  // count based on field value not falsy (no empty string, no null, no zeroes)
+	return {
+    'field': f, 
+    'total': documents.filter((x) => x[f]).length
+  };
 });
+// uncomment for debug/check
+//display(count_by_info);
 ```
+
+```js
+// filter to get counts for dcouments with any date in standard format
+let any_dated_documents = documents.filter((x) => 
+       (x.doc_date_standard || x.inferred_date_standard));
+
+let date_on_doc = documents.filter((x) => x.doc_date_standard);
+let inferred_date_docs = documents.filter((x) => x.inferred_date_standard);
+```
+The current dataset includes ${ any_dated_documents.length.toLocaleString() } dated documents, of which ${ date_on_doc.length.toLocaleString() } have a date on the document itself and ${ inferred_date_docs.length.toLocaleString() } documents have inferred dates.
+
 
 ```js
 display(Plot.plot({
@@ -25,7 +41,7 @@ display(Plot.plot({
   marks: [
     Plot.barX(count_by_info, {
       y: "field",
-      x: "count",
+      x: "total",
       fill: "var(--theme-foreground-focus)",
       width: width,
     }),
@@ -38,7 +54,7 @@ What about as a percent of all documents?
 ```js
 let total_documents = documents.length;
 let percent_info = count_by_info.map((x) => {
-	x.count = (x.count / total_documents) * 100;
+	x.percent = (x.total / total_documents) * 100;
 	return x;
 });
 
@@ -51,7 +67,7 @@ display(Plot.plot({
   marks: [
     Plot.barX(percent_info, {
       y: "field",
-      x: "count",
+      x: "percent",
       fill: "var(--theme-foreground-focus)",
       width: width,
     }),
