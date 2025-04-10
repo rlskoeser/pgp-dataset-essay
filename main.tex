@@ -5,6 +5,8 @@
 \usepackage[letterpaper, total={6in, 9in}]{geometry}
 \usepackage{booktabs}
 \usepackage{wrapfig}
+
+
 \usepackage{notomath}
 % switch to noto serif font
 \usepackage[T1]{fontenc}
@@ -22,10 +24,11 @@
 \usepackage[
     backend=biber,
     style=mla,
+    maxbibnames=99,
 ]{biblatex}
 \usepackage{hyperref}
 \hypersetup{
-    hidelinks=true
+    hidelinks=true  % suppress colored boxes around links
 }
 
 \bibliography{references.bib} 
@@ -33,33 +36,33 @@
 % TODO: confirm that total joins are being calculated correctly
 
 %% numbers from data
-\def\totalDocuments{35,078 }
-\def\singleFragmentDocuments{33,534 }
-\def\totalJoins{1,544 }
-\def\totalLetter{11,198 }
-\def\totalLegalDocument{8,173 }
-\def\totalListOrTable{5,400 }
-\def\totalUnknown{4,180 }
-\def\totalLiteraryText{2,341 }
-\def\totalStateDocument{2,080 }
-\def\totalParaliteraryText{1,125 }
-\def\totalCreditInstrumentOrPrivateReceipt{551 }
-\def\totalLegalQueryOrResponsum{30 }
-\def\uniqueTags{2,671 }
-\def\taggedDimme{1640 }
-\def\taggedAccount{756 }
-\def\taggedCommunal{751 }
-\def\taggedIllness{691 }
-\def\taggedArabicScript{655 }
-\def\taggedIllnessLetter{646 }
-\def\singletonTags{1,069 }
-\def\documentsNoLang{6,200 }
-\def\documentsOneLang{22,319 }
-\def\documentsManyLangs{6,559 }
-\def\documentsMultiLang{6,559 }
-\def\documentsAnyLang{28,878 }
-\def\percentDocsMultiLang{22.7\% }
-\def\percentDocsMonoLang{77.3\% }
+\def\totalDocuments{35,090}
+\def\singleFragmentDocuments{33,544}
+\def\totalJoins{1,546}
+\def\totalLetter{11,202}
+\def\totalLegalDocument{8,075}
+\def\totalListOrTable{5,401}
+\def\totalUnknown{4,181}
+\def\totalLiteraryText{2,341}
+\def\totalStateDocument{2,081}
+\def\totalParaliteraryText{1,126}
+\def\totalCreditInstrumentOrPrivateReceipt{551}
+\def\totalLegalQueryOrResponsum{132}
+\def\uniqueTags{2,671}
+\def\taggedDimme{1640}
+\def\taggedAccount{756}
+\def\taggedCommunal{751}
+\def\taggedIllness{691}
+\def\taggedArabicScript{655}
+\def\taggedIllnessLetter{646}
+\def\singletonTags{1,069}
+\def\totalLangauges{54}
+\def\documentsNoLang{6,195}
+\def\documentsAnyLang{28,895}
+\def\documentsOneLang{22,333}
+\def\documentsMultiLang{6,562}
+\def\percentDocsMultiLang{22.7\%}
+\def\percentDocsMonoLang{77.3\%}
 
 
 \begin{document}
@@ -155,7 +158,14 @@ Because producing transcriptions was a slow and painstaking process that require
 
 PGPv1–2 had covered only documents for which transcriptions existed. The focus of the technology behind them was therefore text search and retrieval. But PGPv3 introduced a new set of affordances, including displaying transcriptions and English-language descriptions of each document, as well as a robust set of typologies or genres. Rustow and Krakowski worked with those affordances to refocus the team’s work on generating as many English-language descriptions of documents as possible—even documents for which transcriptions didn’t yet exist. In effect, they turned the PGP from a text-retrieval system into a database of the documentary \textit{geniza}, with the goal of making it a useful tool not just for specialists but for all researchers interested in the historical material it contained. 
 
-The result was an increase in just two or three years from the 4,350 transcriptions they had inherited from Cohen’s team to around 17,000 descriptions. That rapid increase, in turn, emboldened them to revisit their estimate of the total size of the documentary corpus: they now reckoned it to be around 20,000–30,000 documents. They refocused the team’s work on identifying new documents and writing descriptions of them that even non-specialists could access.
+The result was an increase in just two or three years from the 4,350 transcriptions they had inherited from Cohen’s team to around 17,000 descriptions (see Figure \ref{fig:documents-over-time}). That rapid increase, in turn, emboldened them to revisit their estimate of the total size of the documentary corpus: they now reckoned it to be around 20,000–30,000 documents. They refocused the team’s work on identifying new documents and writing descriptions of them that even non-specialists could access.
+
+\begin{figure}[!htb]
+\includegraphics[width=\textwidth]{charts/docs_over_time.pdf}
+\centering
+\caption{Documents in PGP per year with cumulative total. The spike between 2016 and 2018 is due to the shift from transcription to description.}
+\label{fig:documents-over-time}
+\end{figure}
 
 Beyond the new estimate, there were other implications of the shift from transcriptions to descriptions. Writing descriptions allowed researchers the latitude to add documents to the database even if they couldn’t decipher every word of them. And adding difficult documents to the database would also, the team hoped, enable researchers to find them more easily and come up with their own transcriptions. 
 
@@ -202,7 +212,7 @@ The process of rebuilding the PGP began in July 2020 and is now nearly complete�
 
 The PGP datasets that this essay describes are exported from the PGPv4 web application as multiple flat, tabular data files. They are exported from the PGPv4 web application, which is implemented in the Django framework and is backed by a relational database (PostgreSQL). Familiarity with the structure of the underlying database and choices made in modeling the data should make it easier to understand and work with the exported data, and to recombine the data as needed. 
 
-\begin{figure}[hb]
+\begin{figure}[!ht]
   \includegraphics[width=\textwidth]{db-diagrams/pgpv4_dbdiagram_import.pdf}
   \centering
   \caption{Preliminary database diagram from project planning documents, October 2020. Annotations indicate proposed data migration from PGPv3 metadata spreadsheet.}
@@ -216,8 +226,8 @@ In PGPv4, each fragment is correlated with a shelfmark, a holding institution, a
 
 Fragments are identified by the shelfmarks assigned to them by their holding institutions. Documents have unique numeric identifiers we call PGPIDs. Shelfmarks rarely change; when they do, PGP includes both the new and the old shelfmark. PGPIDs change less rarely: sometimes duplicate documents are found and merged into a single PGPID. The PGPv4 web application tracks both historic shelfmarks and old PGPIDs to find records when identifiers have changed, but that information is not currently included in the data exports.
 
-\begin{figure}[h!]
-  \includegraphics[width=\textwidth]{db-diagrams/pgp v4.19 documents.png}
+\begin{figure}[!hbt]
+  \includegraphics[width=1\linewidth]{db-diagrams/pgp v4.19 documents.png}
   \centering
   \caption{Database diagram showing relationships between documents and fragments.}
   \medskip
@@ -228,7 +238,9 @@ Fragments are identified by the shelfmarks assigned to them by their holding ins
 
 In SQL, a many-to-many relationship requires an additional database table to track pairs of related objects. A minimal implementation of this relationship would be a list of document and fragment id pairs, where each identifier occurs once for each related object; a document written on a single fragment would have one entry, where a document written across two fragments would have two entries with the same document id and two different fragment ids.  PGPv4 stores additional information about the relationship between a document and a fragment in this connecting table (refer to "TextBlock" table in Figure \ref{fig:pgpv4_db_documents}). These extra fields enable researchers describing documents to explicitly specify the order of fragments, add notes to identify the specific portion of a multifragment, or even to indicate an uncertain relationship. 
 
-\begin{wraptable}{l}{2.75in}
+%\begin{wraptable}{l}{2.75in}
+\begin{table}
+\begin{center}
 \caption{Documents by number of fragments}
 \label{table:docs_per_numfrags}
 \begin{tabular}{rrr}
@@ -244,40 +256,47 @@ In SQL, a many-to-many relationship requires an additional database table to tra
 8-64 & 25 & 0.07\% \\
 \bottomrule
 \end{tabular}
-\end{wraptable}
+\end{center}
+\end{table}
+%\end{wraptable}
 
 The majority of PGP documents—\singleFragmentDocuments, or more than 95\%—are written on a single fragment. They are not joins, and so are simple from a data modeling perspective. There are \totalJoins documents that are joins, most of them between two fragments, and some among more than two fragments (see Table \ref{table:docs_per_numfrags}). A small set of outlier documents are correlated with an unusually large number of fragments — 32, 34 and 64 respectively; these are multipage documents, and they are all notebooks containing the legal archives of a courtroom.
 
-\begin{wrapfigure}{r}{0.6\textwidth}
-\begin{center}
-  \includegraphics[width=0.6\textwidth]{charts/documents_per_num_frags.pdf}
-  \centering
-  \caption{Documents by number of fragments}
-  \label{fig:docs_per_num_frags}
-  \end{center}
-\end{wrapfigure}
 
+\begin{figure}[!hbt]
+  \includegraphics[width=1.0\linewidth]{charts/docs_frags_2up.pdf}
+  \centering
+  \caption{Left: Documents by number of fragments. Right: Fragments by number of documents.}
+  \label{fig:docs_per_num_frags}
+\end{figure}
+
+% \begin{figure}[hbt]
+%   \includegraphics[width=0.5\linewidth]{charts/documents_per_num_frags.pdf}
+%   \centering
+%   \caption{Documents by number of fragments}
+%   \label{fig:docs_per_num_frags}
+% \end{figure}
+
+% \begin{figure}[hbt]
+%   \centering
+%   \includegraphics[width=0.5\linewidth]{charts/fragments_with_num_docs.pdf}
+%   \centering
+%   \caption{Fragments by number of documents}
+%   \label{fig:frags_by_num_docs}
+% \end{figure}
 
 If we flip the question and ask how many fragments contain more than one document, again we find that the majority (nearly 90\%) contain a single document.
-
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.8\textwidth]{charts/fragments_with_num_docs.pdf}
-  \centering
-  \caption{Fragments by number of documents}
-  \label{fig:frags_by_num_docs}
-\end{figure}
 
 The more complicated cases provide an opportunity to draw insights beyond the textual and visual contents of individual documents. The co-occurrence of different texts on the same fragment enables scholars to trace new histories of paper and parchment circulation and reuse. For instance, two petitions to the Fatimid ruler Sitt al-Mulk \autocite{noauthor_state_1024, noauthor_state_1021} were glued together by a Jewish scribe in need of a long vertical scroll on which to copy a liturgical text. By making the relationship between documents and fragments more explicit and easier to navigate, PGPv4 makes it easier to work across related documents and reused fragments.
 
 \subsection{Types, Descriptions, and Tags}
 
-Each document entry in the database includes three main metadata components: types, descriptions, and tags.
+Each document entry in the database includes three main metadata components: types, descriptions, and tags. Every document has a description, even if it is short; nearly all documents have a type.
 
-\begin{figure}[h!]
+\begin{figure}[!hbt]
     \centering
-    \includegraphics[width=1\linewidth]{charts/metadata_known_unknown.pdf}
-    \caption{Metadata fields and availability across documents}
+    \includegraphics[width=1.0\linewidth]{charts/metadata_available.pdf}
+    \caption{Availability of metadata fields across documents}
     \label{fig:metadata-status}
 \end{figure}
 
@@ -295,18 +314,19 @@ Each document entry in the database includes three main metadata components: typ
     \item \textbf{Unknown type}: illegible, unidentified, or uncategorized text that requires further study.
 \end{enumerate}
 
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1\linewidth]{charts/document_types.pdf}
+  \caption{Documents by Type}
+  \label{fig:document_types}
+\end{figure}
+
 This nine-part typology addresses the need to reduce friction at two key stages of working with the data: entering a document for the first time and transcribing it. It reduces friction at the data-entry stage by avoiding complex decision trees. Although there are many more than eight templates that the scribes of the documents were following (or devising on the fly), when entering a document for the first time, picking through a massive list of document types places an undue burden on the researcher. These nine types cover nearly all the existing cases. 
 
 It reduces friction at the transcription stage by making it easier to find similar documents for reference, allowing researchers to compare documents easily in order to facilitate transcription. If you’re faced with the task of transcribing a document that is faded, torn or full of holes, looking at similar documents will help you fill in the blanks. True, scribes tended to use formulaic phrases the way experienced chefs use ingredients rather than slavishly following recipes; but the eight-part typology is a way of bringing similar documents together without overdetermining their shared features or misrepresenting the way scribes worked.
 
-There are currently \textbf{\totalDocuments} documents in PGP. The most common types are letters (\textbf\totalLetter) and legal documents (\textbf{\totalLegalDocument}). The current dataset includes \textbf{\totalUnknown} documents of unknown type, which usually means they have not yet been cataloged and described, or else that don’t fall into existing categories. 
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=1.0\textwidth]{charts/document_types.pdf}
-  \caption{Documents by Type}
-  \label{fig:document_types}
-\end{figure}
+There are currently \textbf{\totalDocuments} documents in PGP. The most common types are letters (\textbf\totalLetter) and legal documents (\textbf{\totalLegalDocument}; see Figure \ref{fig:document_types}). The current dataset includes \textbf{\totalUnknown} documents of unknown type, which usually means they have not yet been cataloged and described, or else that don’t fall into existing categories. 
 
 Nearly all documents have \textbf{descriptions}. These are English-language summaries of the main contents of a document. (Some documents also have Hebrew-language descriptions culled from existing Hebrew-language scholarship.) Descriptions don’t follow a strict template, and they can range in size from terse to expansive. Most are brief, with an average of 271 characters and 45 tokens. They are generally structured as an inverted pyramid putting the main information—author, recipient, locations, dates—followed by the details, for instance: 
 
@@ -355,13 +375,13 @@ We also include a few categories of unknown languages and scripts, which may be 
 
 The authors of Geniza documents often employed a mix of languages. Our data model allows documents to have multiple languages. Of the \documentsAnyLang documents with language information, \documentsMultiLang (\percentDocsMultiLang) have multiple languages. The most common combinations are Judaeo-Arabic with Hebrew and Judaeo-Arabic with Arabic. 
 
-\begin{figure}[hbt]
+\begin{figure}[!hbt]
   \centering
-  \includegraphics[width=\textwidth]{charts/primary_language_upsetplot.png}
-  \caption{An UpSet plot of primary language combinations, for languages that occur at least 200 times.}
+  \includegraphics[width=0.8\textwidth]{charts/primary_language_upsetplot.png}
+  \caption{An UpSet plot of documents by primary languages, for languages that occur at least 200 times.}
     \medskip
     \small
-    The upper bar chart shows the number of documents with different set of languages or language combinations; the bar chart at left shows the size of each individual category. The provide a visual indicator of the categories at left and the combinations represented in the upper bar chart.\footnotemark
+    The upper bar chart shows the number of documents for different groups of languages and language combinations; the bar chart at left shows the size of each language category across all groups. The matrix provides a visual indicator of the categories at left and the combinations represented in the upper bar chart.\footnotemark
   \label{fig:lang_combination_upset_plot}
 \end{figure}
 
@@ -371,17 +391,32 @@ We also distinguish between “primary language,” meaning that most of the doc
 
 \subsection{Dates and Calendars}
 
-Geniza documents date from the ninth to the early twentieth century. But they are not evenly distributed: most documents date to the eleventh, twelfth and thirteenth centuries, with significant later clusters from the sixteenth and nineteenth centuries that have received less attention than they deserve.
+Geniza documents date from the ninth to the early twentieth century, but they are not evenly distributed. Most documents date to the eleventh, twelfth and thirteenth centuries, with significant later clusters from the sixteenth and nineteenth centuries that have received less attention than they deserve.
 
 Situating documents chronologically is essential for historians, because it allows them to interpret them more accurately and contextualize them. But fragmentary documents can be challenging to date; Rustow has written elsewhere about the challenges and different types of uncertainty in dating geniza documents \autocite{rustow_dating_nodate}. Even documents containing explicit dates sometimes note the day and month but omit the year, which in the case of letters was usually obvious to both sender and recipient. 
 
 When a document explicitly notes the date, we call it “date on document” and consider it authoritative. This isn’t always the date on which the document was written, but it is usually close enough to serve as a reference point. Documents rarely have more than one date; when they do, we use whichever one is latest. In other cases, the date can be inferred based on the people or events the document mentions, or coins it mentions that were minted and circulated in limited periods \autocite{dudley_coins_2023}. Some scholars are able to infer the date of documents based on handwriting, either because an individual’s writing is well-known or because the style of writing occurred only in a certain period. For instance, the scribe Ḥalfon b. Menashshe, a Jewish legal clerk in Fustat active in the first half of the twelfth century, has a distinctive handwriting that allows for confident document dating \autocite{elbaum_halfon_nodate}; a highly cursive Iberian style of writing became common in Egypt starting in the late fifteenth century.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=\textwidth]{charts/combined_dating.pdf}
+  \caption{Documents by date. The green line chart graphs the totals for documents by year, based on a midpoint date for date ranges. The partial transparent blocks indicate totals for dated documents aggregated by date range.}
+  \label{fig:docs_dating_combined}
+\end{figure}
+
 
 The PGP currently has 4,305 dated documents, of which 4,005 have a date on the document itself and 300 documents have inferred dates. 
 
 Most of the surviving dates on documents use non-Gregorian calendars. The year systems include the Jewish year (\textit{anno mundi}), the Seleucid year, the Islamic (\textit{hijrī}) year and the Egyptian fiscal (\textit{kharājī}) year. Months include the Jewish, Coptic and Islamic months, and sometimes a single date will mix and match calendars. 
 
 The PGP supports multiple calendars; starting with version 4.5 (released in June 2022), PGP provides automatic parsing and conversion for Seleucid, \textit{hijrī} and \textit{anno mundi} dates to Common Era dates (Julian before 1583, Gregorian after). This enables documents to be sorted, filtered, and compared in a unified chronology, and to be understood by non-expert audiences.\footnote{Calendar conversion is implemented using the Python \texttt{convertdate} library, with additional logic to handle the Seleucid calendar.}
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=\textwidth]{charts/dated_docs_by_cal.pdf}
+  \caption{Dated documents by calendar.}
+  \label{fig:docs_dating_combined}
+\end{figure}
 
 In both the PGPv4 web interface and the published datasets, we preserve and publish both the original calendar and the converted dates, since they are useful for different kinds of analysis.
 
@@ -405,13 +440,12 @@ Blog & 1 & 1 \\
 \bottomrule
 \end{tabular}
 \end{wraptable}
-
 All the more important, then, to distinguish clearly between existing and new research: the PGP builds on a substantial scholarly record of both published and unpublished materials, most notably but not solely Goitein’s transcriptions, translations, and index cards. Other scholarship included in the database includes books, book chapters, articles, dissertations and blog posts, as well as unpublished transcriptions by Goitein’s students, their students and their students’ students, down to current project researchers (see Table \ref{table:scholarship_sources}). 
 
-PGPv4 attaches evidence or sources to database entries using a database footnotes module, which we adapted from previous projects developed at CDH \autocite{koeser_princeton-cdhmep-django_2022, koeser_derrida-django_2021}.\footnote{CDH footnotes modules were originally inspired by Jean Bauer’s approach to database footnotes, which were designed to allow for conflicting evidence, indicating “whether or not that source supports the information in the record” (\citeyear{noauthor_tales_2012}).} They are implemented with Django’s “Generic Foreign Key”, which uses a combination of content type and object identifier to identify any record in the database, for example the document database table, and a document record primary key or PGPID. In the Shakespeare and Company Project, this approach was used to provide references to the archival source materials the data draws on \autocite[18]{kotin_shakespeare_2022}. In this project, we augmented the footnotes by adding a field indicating how the source relates to a specific document and whether it provides a transcription, translation, and/or discussion of it. References are included in the footnote data export as plain text.
+PGPv4 attaches evidence or sources to database entries using a database footnotes module, which we adapted from previous projects developed at CDH (\citeyear{koeser_princeton-cdhmep-django_2022, koeser_derrida-django_2021}).\footnote{CDH footnotes modules were originally inspired by Jean Bauer’s approach to database footnotes, which were designed to allow for conflicting evidence, indicating “whether or not that source supports the information in the record” (\citeyear{noauthor_tales_2012}).} They are implemented with a Django “Generic Foreign Key”, which uses a combination of content type and object identifier to identify any record in the database, for example the document database table, and a document record primary key or PGPID. In the Shakespeare and Company Project, this approach was used to provide references to the archival source materials the data draws on \autocite[18]{kotin_shakespeare_2022}. In this project, we augmented the footnotes by adding a field indicating how the source relates to a specific document and whether it provides a transcription, translation, and/or discussion of it. References are included in the footnote data export as plain text.
 
 \subsection{Transcriptions and Translations}
-Transcriptions have long been the gold standard in documentary \textit{geniza }research: the texts are often difficult to read and always contain unique, historically valuable information not found in other historical repositories, so every word is precious and worth the effort to  decipher and preserve. Translations, of course, make the material available to a wider pool of researchers. 
+Transcriptions have long been the gold standard in documentary \textit{geniza }research: the texts are often difficult to read and always contain unique, historically valuable information not found in other historical repositories, so every word is precious and worth the effort to decipher and preserve. Translations, of course, make the material available to a wider pool of researchers. 
 
 By default, the site displays images, transcriptions and translations side-by-side (provided that all three exist for a given document). Users may choose to suppress any one of them from the view temporarily. The dataset exports contain transcriptions and translations as …
 
@@ -459,7 +493,7 @@ tbd
 
 The Cairo Geniza has long had a fascinating, puzzle-box like quality for scholars. Specialists still routinely make new discoveries, some important, some whimsical. Alan Elbaum recently discovered an unknown document written in the handwriting of Moses Maimonides (1138–1204), a philosopher and physician who spent the last forty years of his life in Fustat and is perhaps the most famous Jewish person of the Middle Ages \autocite{ashur_new_2024, noauthor_list_nodate}. Koeser came across a delightful drawing of a Nile boat (Figure \ref{fig:pgpid8483}) while working on the random sort feature for PGP v4.2 in March 2022; as it turns out, Goitein had known of the fragment, but no one had yet described it in the PGP \autocite{noauthor_paraliterary_nodate}. The development of PGPv4 and the publication of these datasets we hope bear the potential to open up the materials and their many remaining discoveries to work by scholars in new areas of expertise. 
 
-\begin{figure}[h!]
+\begin{figure}[!hbt]
   \includegraphics[height=4in]{MS_TS-K-5-2_detail.jpg}
   \centering
   \caption{Recto of T-S K5.82 containing a drawing of a Nile boat \autocite{noauthor_paraliterary_nodate}.}
