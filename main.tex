@@ -1,0 +1,486 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+% US paper is 8.5 x 11
+\usepackage[letterpaper, total={6in, 9in}]{geometry}
+\usepackage{booktabs}
+\usepackage{wrapfig}
+\usepackage{notomath}
+% switch to noto serif font
+\usepackage[T1]{fontenc}
+\usepackage{newunicodechar}
+% declare unicode character causing problems
+\newunicodechar{Ḥ}{\d{H}} % \d is dot under accent
+\newunicodechar{ʾ}{’}
+%#DeclareUnicodeCharacter{02BF}{‘}
+
+\title{Princeton Geniza Project datasets}
+\author{Rebecca Sutton Koeser and Marina Rustow}
+
+\date{April 2025}
+
+\usepackage[
+    backend=biber,
+    style=mla,
+]{biblatex}
+\usepackage{hyperref}
+\hypersetup{
+    hidelinks=true
+}
+
+\bibliography{references.bib} 
+
+% TODO: confirm that total joins are being calculated correctly
+
+%% numbers from data
+\def\totalDocuments{35,078 }
+\def\singleFragmentDocuments{33,534 }
+\def\totalJoins{1,544 }
+\def\totalLetter{11,198 }
+\def\totalLegalDocument{8,173 }
+\def\totalListOrTable{5,400 }
+\def\totalUnknown{4,180 }
+\def\totalLiteraryText{2,341 }
+\def\totalStateDocument{2,080 }
+\def\totalParaliteraryText{1,125 }
+\def\totalCreditInstrumentOrPrivateReceipt{551 }
+\def\totalLegalQueryOrResponsum{30 }
+\def\uniqueTags{2,671 }
+\def\taggedDimme{1640 }
+\def\taggedAccount{756 }
+\def\taggedCommunal{751 }
+\def\taggedIllness{691 }
+\def\taggedArabicScript{655 }
+\def\taggedIllnessLetter{646 }
+\def\singletonTags{1,069 }
+\def\documentsNoLang{6,200 }
+\def\documentsOneLang{22,319 }
+\def\documentsManyLangs{6,559 }
+\def\documentsMultiLang{6,559 }
+\def\documentsAnyLang{28,878 }
+\def\percentDocsMultiLang{22.7\% }
+\def\percentDocsMonoLang{77.3\% }
+
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\begin{figure}[h!]
+  \includegraphics[height=5in]{PGPID 9690_T-S_12.392r.png}
+  \centering
+  \caption{Letter: T-S 12.392, Oct. 1103 CE. \textit{Princeton Geniza Project}, PGPID 9690.}
+  \label{fig:pgpid9690}
+\end{figure}
+
+
+“Then we boarded a boat that contained not a single nail of iron, may God protect us with his shield” \autocite{noauthor_letter_1103}. Thus wrote a Libyan Jewish trader in 1103 to his brother-in-law back home. He had made it as far as Dahlak, an island in the southern Red Sea, but most of his voyage still lay before him: like many northern African traders of his generation, he hoped to make it across the Indian Ocean to the Malabar coast, where he would buy pepper and other commodities from India and farther east. Having made it up the Nile, across Egypt’s eastern desert and as far south as Dahlak, the new obstacle now before him was a type of craft he’d never seen before: one whose planks were tied together with ropes made of coconut coir. Little did he know, this was a perfectly safe way to travel; boats of this kind had been utilizing the regularity of the monsoon winds to ferry humans across the Indian Ocean since the days of the Roman emperor Nero.
+
+\subsection{The Cairo Geniza}
+
+The richness and detail of this trader’s story are known to us thanks to an extraordinary cache of historical sources: the Cairo Geniza, one of the densest and most coherent corpora for premodern history. A \textit{geniza} is a repository for discarded texts that according to Jewish custom cannot be casually destroyed because they are in Hebrew script or because they contain God’s name in Hebrew script. One \textit{geniza} in particular, in a medieval synagogue in Cairo, preserved hundreds of thousands of pages or fragments of pages that became available to scholars in the late nineteenth century. The texts are mostly (though not all) in Hebrew script; the ten percent of documents among them—letters, legal deeds, lists, accounts and other ephemera of everyday life—are mainly in Judaeo-Arabic, the term modern specialists use for the Arabic language written in Hebrew characters. The texts have not yet been completely cataloged, let alone published or translated; adding to the complexity of working with them is the fact that many of the texts are fragmentary, and they are now dispersed across more than sixty libraries and private collections on five continents, so that parts of the same page can be separated by an ocean.
+
+Historical documents from the Cairo Geniza—the “documentary \textit{geniza}” for short—are especially precious because they convey unique information often not preserved in other sources, and do so candidly, without an eye to posterity: their owners never intended them to be deciphered by dogged scholars hundreds of years in the future. And a confluence of circumstances ensured that the synagogue that preserved those documents was built in the 1020s, just as Egypt was becoming the economic and cultural powerhouse of the Mediterranean and the endpoint of trade networks across the Indian Ocean. The people reflected in the documents were remarkably mobile geographically—like our Libyan with the transportation dilemma; the world the documents represent centered on Egypt, but it stretched from Spain to Sumatra. 
+
+\subsection{The Princeton Geniza Project}
+
+The sheer volume of new information \textit{geniza} documents offer is uncommon in premodern history. But precisely this abundance—and the fact that the texts are often incomplete and linguistically recondite—makes special demands of scholars. That’s where digitization comes in. 
+Early in the personal computing era, in 1986, a Princeton-based team began digitizing transcriptions of \textit{geniza} documents to make them searchable. This was the birth of the Princeton Geniza Project (PGP), a database devoted to the documentary sources of the Cairo Geniza. In 2020, as the database approached its thirty-fifth anniversary, the authors launched a major overhaul of the database. Now, as it approaches its fortieth, we are publishing its vastly expanded data in the hope of bringing them to a wider community of digital and computational humanists and making them more tractable.
+
+Although the PGP is a long-running project, this is the first time its data have been published comprehensively as a dataset, or separately from the interface for accessing the documents. This essay therefore describes the project’s history, explains the structure of the data and provides some context for their nuances and unevenness. We intend it as a frame of reference for anyone who wants to work with the data. 
+
+\subsection{PGPv4}
+
+Between 2020 and 2022, the Princeton Geniza Lab (PGL) and the Center for Digital Humanities at Princeton (CDH) partnered on a research collaboration to update the Princeton Geniza Project database. The data had become siloed and unwieldy over the years, and our goals were to streamline the database and allow researchers on the project to interact directly with it rather than through the mediation of software engineers. Especially urgent was implementing a solution for managing document transcriptions, a pain point and bottleneck for years: transcriptions are the gold standard for researchers, making it easier for historians to extract information from the documents by providing a high-quality edition of the text. We therefore modernized the database’s infrastructure by building in best practices for crediting researchers’ contributions to it, and updated the interface by including images of the documents alongside the existing transcriptions and translations. 
+
+Over the course of a five-year period—the first two as a CDH–PGP partnership, and, after the first year, working for an additional four with Performant Software Solutions—we restructured and combined the existing project data, migrated them to a new relational database, built a transcription interface that displays transcriptions and images side-by-side, developed a way to link transcriptions to images and built modules to track the relationships among people, places and documents.\footnote{ Project charters for the first and second year of the collaboration between PGL and CDH document the significance, scope, goals, project team members, and include high-level roadmaps for the planned technical implementation for each phase. \autocite{budak_cdh_2020, rustow_cdh_2022} } 
+
+In 2022, as we neared the launch of the first iteration of the new database, we decided to label it version 4 (PGPv4) in acknowledgment of its long history and the decades of scholarship and engineering that had gone into it, dating back to the 1980s.
+
+The larger aim of our efforts was to accelerate research on the documentary \textit{geniza}. In this, we succeeded: in May 2021, when we launched the new admin interface, the database contained around 17,000 document entries; the ease of adding new materials and metadata allowed the team over the next two years to double the number of document entries, dramatically enriching the quality of information on these sources and accelerating the pace of research on them.
+
+Any good engineering tool helps not only to improve data interfaces, but also to streamline team workflows. The project has allowed team members to share their research with each other and with the public in real time, and also to expand the pool of researchers to include undergraduates and even some high school students, as well as colleagues from other institutions. 
+
+Although PGPv4 is backed by a relational database, it was always part of the plan to allow for flat data exports. Researchers on the PGP team were already accustomed to working with the project data in a shared spreadsheet, and they often made their own datasets as they gathered evidence. This publication of the data expands that capability, providing different modes and scales of access to allow for what Ryan Cordell summarizes as “zoomable, scalable, or macroscopic reading” and analysis \citeyear{cordell_what_2017}.
+
+\section{The History of the PGP and Its Data}
+
+The PGP datasets we are now publishing are the result of a long history of work on the project by its many researchers and software engineers.
+
+\subsection{Origins of the Project}
+
+The year 1985 was a turning point in the study of the documentary geniza. The founder of the field, S. D. Goitein (1900–85), was an extraordinarily committed, hard-working and assiduously organized researcher. When he died in January 1985, his PhD students weren’t sure the field could survive without his superhuman energy and philological expertise. Goitein had developed what he called a “lab” of research notes, transcriptions and translations, most of which remained unpublished. These included 29,000 index cards containing notes on the people, places, names, professions, objects and obscure vocabulary in the documents, as well as more than 2,000 of his transcriptions and translations. To get a sense of what this means in the life of an ordinary researcher, consider that it can take anywhere from half a day to several weeks to get a transcription or a translation right: the grammatical forms the documents use aren’t always standard, some of the vocabulary doesn’t appear in dictionaries with relevant meanings and the fragments are often faded and torn. Then there is the problem of cross-referencing words and phrases without digital aids. Goitein’s index cards, transcriptions and photocopies were his analog database. 
+
+The staggering size of Goitein’s research archive did not make his students feel reassured about the future of their field when he died—quite the contrary. But then two of his students and a fortunate confluence of events intervened to ensure its continuation. 
+
+Goitein had retired from the University of Pennsylvania in 1969 and moved to the Institute for Advanced Study in Princeton in 1971. Two of his students, Mark R. Cohen and A. L. Udovitch, were both then teaching in the Near Eastern Studies Department at Princeton University and were in close touch with their mentor. Then, in 1984, IBM’s Advanced Education Project donated a fleet of computing equipment to Princeton and eighteen other United States research universities in order to encourage faculty to develop classroom instruction materials that utilized personal computers. This was the dawn of the personal computing era; IBM wanted to accelerate it by embedding computers in university research. The degree to which anyone at the time imagined humanists taking advantage of it remains unclear.
+
+In February 1985, Goitein died. In his will, he bequeathed his research archive—his “lab”—to the Jewish National and University Library (now the National Library of Israel) in Jerusalem. Before sending the material to Jerusalem, Cohen and Udovitch photocopied everything. With the indispensable help of two Princeton doctoral students in Near Eastern Studies, Paula Sanders and Amy Singer, they worked through the materials and organized and indexed them. As they did, they came up with the idea of leveraging the IBM grant to turn Goitein’s unpublished transcriptions into a full-text retrieval system. This was the birth of the Princeton Geniza Project, and of the Princeton Geniza Lab that came to house it.
+
+Over the next ten years, Cohen, Udovitch and their doctoral students, as well as various typists and developers, created an electronic database of geniza document transcriptions using IBM software, six computer terminals and a laser printer. They managed to digitize nearly all Goitein’s published and unpublished transcriptions, as well as several hundred transcriptions by researchers whom he had trained. They also checked the transcriptions against the original manuscripts (or photostats and microfilm images of them). This resulted in extraordinarily high-quality, reliable data. This was the first version of the Princeton Geniza Project database, which our current team retroactively dubbed PGPv1, containing around 1,800 transcriptions.
+
+To make the transcriptions searchable, the PGP team had to solve a number of unsolved engineering problems. One challenge was right-to-left, non-Latin-script search, which the technology at the time did not yet support, since Latin script was the default option for coding, indexing and display. The first solution came from a humanities computing specialist (today we would call him a research software engineer) named Michael Sperberg-McQueen who adapted existing DOS word processing software to handle both Hebrew and Arabic scripts, both of which are read right-to-left. 
+
+A further problem—how to access the database without coming physically to Princeton—required a more complex set of solutions. Cohen remarked that at this stage of the project, as the team backed up its work on floppy disks, “we … bided our time, waiting for a way to manipulate the database and disseminate it to others \autocite[40]{cohen_princeton_2014}.
+
+Searching the corpus was challenging as well, in part because of its size: 10 MB, laughably small by today’s standards but difficult for early PCs to index. Between 1994 and 1997, a solution arrived with an educational software engineer named Peter Batke, who took an existing program for MS-DOS called WordCruncher 4.5 and adapted it to the needs of right-to-left text. Batke possessed a combination of specializations that at the time was (in his words) “quite esoteric” \autocite{noauthor_background_nodate}. He had not only devised search solutions for other textual corpora, but also co-designed the Duke Language Toolkit, a solution for computing in non-Roman alphabets. The advantages of WordCruncher 4.5, which had been designed at Brigham Young University for indexing, searching and retrieving large textual corpora such as the collected works of Shakespeare, the Bible and the Book of Mormon, were that it could index texts relatively quickly, using small random access memory regions, and it could also produce concordances that helped researchers find terms they didn’t yet know to search for. This was a pronounced advantage for \textit{geniza} documents because of their surprisingly variable orthography. 
+
+But then technology continued to develop apace. Batke had solved the indexing and searching problem, but he had done so in the soon-to-be-outmoded DOS environment. As of 1996, the team was still planning to distribute its data and software on CD-ROMs; the growth of the internet made this plan obsolete.
+
+\subsection{PGPv2}
+
+The advent of the internet led to the development of PGPv2, designed by Rafael Alvarado, Batke’s successor as humanities computing consultant at Princeton. Alvarado made the content of PGPv1 available online for the first time by migrating it to a web application he called TextGarden, which stored the documents in Extensible Markup Language (XML) and took advantage of a flexible relational model by indexing them as a network. TextGarden built on the text encoding and interface affordances of dynamic HTML, representing Hebrew and Arabic script using Unicode. Thus began the first major PGP migration from local terminals and floppy disks to a globally available website.\footnote{ Our thanks to Rafael Alvarado for contributing to this write up of his work on TextGarden.} 
+
+Migrations can be both liberating and treacherous for data. This one came with a vast improvement and some minor losses. The improvement was the Unicode text encoding system, which allowed multiple writing systems to be displayed at the same time. Before Unicode, web pages were able to display text in only one writing system at a time.\footnote{Unicode Standard Version 1.0, Volume 2 was printed in 1992; the work leading up to it included substantial efforts to support a large number of Arabic ligatures \autocite{noauthor_chronology_nodate}. Unicode and font implementations still make assumptions about languages that don't necessarily hold for the languages used in PGP materials, for instance the need to use Arabic vowels with Hebrew consonants.} This was a problem for many geniza documents, especially letters: when Jewish traders wrote to their colleagues in Judaeo-Arabic, for example, they would often write the addresses in Arabic script, since mail carriers more often than not didn't read Hebrew. Many letters are therefore in both Hebrew and Arabic script. Before Unicode, there was no way to display the transcriptions accurately. The team devised a workaround: transliterating the Arabic addresses into Hebrew script. But this misrepresented the original and also departed from best practices in the field. After Unicode, the texts could be displayed as written. (As of 2024, our team still occasionally finds addresses in Hebrew characters only to discover in comparison with the manuscript that they should be in Arabic characters—lingering artifacts of the pre-Unicode workaround.) 
+
+There were also minor losses with the migration to PGPv2: some improper conversion of letter characters and some corruption of library shelfmarks (the equivalent of call numbers for manuscripts). These were relatively easy to fix, however. “The process of conversion was daunting,” Cohen later remarked, and “was accomplished with a certain amount of imperfection”—but he and his team eliminated most of that imperfection \autocite[43]{cohen_princeton_2014}.
+
+PGPv2 precipitated a revolution in the field of geniza studies. Before PGPv2, the only way for researchers to access Cairo Geniza documents was via published transcriptions, leads from footnotes, Goitein’s unpublished files (in Jerusalem or Princeton) or paging through manuscripts in holding institutions. It was all needle-in-a-haystack work. PGPv2 made it possible to work from one’s home or library and to slice through a subset of the documentary geniza corpus by searching it with keywords. The Cairo Geniza was at the time believed to have preserved around 10,000 documentary texts (an estimate that later more than tripled). PGPv2 included transcriptions of 2,250 of them, and they were enough to fuel dozens of doctoral dissertations. 
+
+\subsection{PGPv3}
+
+The database continued to expand slowly but steadily. It did so thanks in part to a new funding stream. In the late 1990s, the Friedberg Genizah Project (FGP) in Jerusalem began working to catalogue and create digital images of all Cairo Geniza fragments, including the subset of documentary texts on which the PGP focused. The FGP’s work established for the first time what the total number of Cairo Geniza fragments was—400,000. It was still not known how many of those were documentary texts, since they hadn’t all been catalogued. So around 2004, the FGP began supporting the PGP team’s work identifying and transcribing unpublished documentary fragments. That led to the addition of another 2,000 fragments, bringing the total number of document transcriptions to 4,350.
+
+In 2004, a new engineer joined the PGP team: Ben Johnston, an Educational Technology Consultant at Princeton’s McGraw Center for Teaching and Learning. Johnston’s contributions to the PGP began with updating the transcriptions by lightly encoding them using the Text Encoding Initiative (TEI) technical standard. He also began storing them in Bitbucket, Altassian’s Git-based source-code repository. 
+
+But this was also the end of an era. Udovitch retired from Princeton in 2008, and Cohen retired in 2013. In 2015, Eve Krakowski and Marina Rustow replaced them as faculty in the Department of Near Eastern Studies, and Rustow became the PGP’s director. Both had been using the PGP for years, and were eager both to continue its work and to see it expand. 
+
+Krakowski and Rustow decided, first, that it was time to find out, once and for all, how many documentary geniza texts there were. Revisiting that estimate also led to an eventual shift in the PGP’s purpose and back-end workflows. 
+
+From the project’s origins until 2015, its goal had been to make transcribed geniza documents searchable for specialists. The project had always been geared toward specialists who knew how to read the documents, and merely needed a way to search the texts. It had never focused on creating English-language descriptions of the documents, let alone translations, since the specialists it was geared toward could do that on their own. The PGP was focused only on the most difficult of tasks: producing transcriptions. 
+
+Because producing transcriptions was a slow and painstaking process that required many hours of paleographic and linguistic expert labor, the number of documents in the database had hovered in the low thousands for three decades. This was fine so long as the field still believed the total number of documentary \textit{geniza} texts to be around 10,000: it was a major achievement that the PGP had digitized transcriptions of nearly half of them. But no one had revisited that estimate in many years. It was due for reexamination. 
+
+PGPv1–2 had covered only documents for which transcriptions existed. The focus of the technology behind them was therefore text search and retrieval. But PGPv3 introduced a new set of affordances, including displaying transcriptions and English-language descriptions of each document, as well as a robust set of typologies or genres. Rustow and Krakowski worked with those affordances to refocus the team’s work on generating as many English-language descriptions of documents as possible—even documents for which transcriptions didn’t yet exist. In effect, they turned the PGP from a text-retrieval system into a database of the documentary \textit{geniza}, with the goal of making it a useful tool not just for specialists but for all researchers interested in the historical material it contained. 
+
+The result was an increase in just two or three years from the 4,350 transcriptions they had inherited from Cohen’s team to around 17,000 descriptions. That rapid increase, in turn, emboldened them to revisit their estimate of the total size of the documentary corpus: they now reckoned it to be around 20,000–30,000 documents. They refocused the team’s work on identifying new documents and writing descriptions of them that even non-specialists could access.
+
+Beyond the new estimate, there were other implications of the shift from transcriptions to descriptions. Writing descriptions allowed researchers the latitude to add documents to the database even if they couldn’t decipher every word of them. And adding difficult documents to the database would also, the team hoped, enable researchers to find them more easily and come up with their own transcriptions. 
+
+Moreover, documents can become easier to decipher in batches (we’ll return to this point below). By reading dozens of sales contracts, for instance, you can clarify the textual structure and patterns they use, and once you’ve read fifty sales contracts, you can anticipate what even a fragmentary or faded contract should be saying in the bits you can’t decipher. Even when the handwriting is difficult or the document is riddled with holes and abrasions, find similar documents and you can fill in the blanks. By capturing as many documents as possible and grouping them into types, Krakowski and Rustow hoped not just to accelerate the addition of new documents to the database, but to arrive at a more realistic picture of the documentary geniza and its scope.
+
+To support the rapid expansion of the database, Johnston rebuilt the system to ingest descriptive metadata from a Google spreadsheet. Now instead of changes to the database going through the project directors and two or three trusted researchers, the directors gave roughly a dozen researchers access to the spreadsheet so they could add or edit descriptions—a great improvement in the flexibility and collaborative power of the PGP. 
+
+That collaborative power extended not only to individual researchers, but also to other institutions. The scope of the PGP expanded with the addition of a large batch of records that the Cambridge University Library had created in its dedicated Genizah Research Unit, which since the early 1970s had employed PhD- and postdoctoral-level scholars to write tens of thousands of descriptions of \textit{geniza} fragments, around 7,000 of which were documentary texts. In 2017, the Cambridge team graciously gave Rustow their document descriptions and the PGP team ingested them wholesale (giving credit to CUDL), checking and expanding them over the subsequent years. The team also received metadata from the FGP database, which resulted in more than 2,000 new descriptions.\footnote{These FGP descriptions were crowd-sourced, so rather than ingesting them wholesale, the team hired Amir Ashur to review and revise them, a task he accomplished in 2022–23.
+} PGPv3 resulted in a massive and relatively painless expansion of the database, bringing the total number of documents well beyond the historical estimate of 10,000. 
+
+But then the expansion of the PGP’s focus and data pushed its infrastructure to the breaking point. The Google Sheets metadata spreadsheet had made adding document descriptions astonishingly easy. But the number of entries grew large enough that the spreadsheet became too unwieldy to load on every machine. The team now had an urgent need to build another system. Rustow, Krakowski and Johnston recognized that they would eventually need to rebuild the system. 
+
+Once they knew they would have to rebuild the system, they began to take stock of the problems in PGPv3. 
+
+In addition to the cumbersomeness of the metadata spreadsheet, there was another workflow challenge: it was still cumbersome to make even minor edits to the transcriptions. If researchers found a typo or came up with a better reading of a text, the protocol had long been that they sent emails to the director, who in turn passed the edits on to Johnston, who meanwhile had taught himself to read the Hebrew and Arabic alphabets and inserted the changes himself. Johnston had simplified this cumbersome process by giving Rustow, Krakowski and two of their research assistants access to the Bitbucket repository so they could edit the texts directly. But Bitbucket didn’t handle right-to-left text well, and the process was still cumbersome enough to discourage editorial changes. 
+
+Rustow and Krakowski began consulting with the Center for Digital Humanities in 2017. It was only then that they became aware of the long-term need for better project documentation, stability and sustainability as they contemplated what PGP would look like over the next decade (or four). These were the immediate motivations for the PGL-CDH research partnership that began in July, 2020.
+
+\subsection{PGPv4}
+
+The lead researchers on PGPv4 were Rebecca Sutton Koeser, who led the software design and implementation team, and Marina Rustow, who led the research team. They worked together with another software engineer (Nick Budak, replaced in 2021 by Ben Silverman of Performant Software Solutions), a UX designer (Gissoo Douroudian, replaced in 2022 by Chelsea Giordan of Performant Software Solutions) and PhD students in geniza studies and related fields who served as project managers (Stephanie Luescher [2020-1], Rachel Richman [2020-present], Zohar Berman [2021-2], Ksenia Ryzhova [2022-present] and Amel Bensalim [2023-present]). The expansion of the team created two needs that the PGP had never had to face before: regular meetings and intensive documentation. Thanks to the CDH’s experience with similar partnerships, they were able to put the new team workflows in place relatively quickly over the second half of 2020. (In what follows, “we” refers to this expanded team.) The collaborative effort required the engineers on the research team to learn the basics of geniza studies, and the geniza researchers to learn about data modeling and software engineering workflows.
+
+As we designed PGPv4, the first and most important decision we made was to migrate the data from a flat model to a relational database. After three months of weekly conversations on data modeling, we knew how we wanted to structure it: at its core, there needed to be a many-to-many relationship between fragments and documents. 
+
+A fragment is the physical piece of paper or parchment, usually with its own shelfmark, the identifier used by the owning institution to reference the material object); a document is a discrete textual unit, such as a letter, contract or list.\footnote{In some cases, libraries gave a single shelfmark to unrelated fragments, typically when they were small and needed to be encapsulated within the same “multifragment” page of large binders. Multifragment shelfmarks can be found at Cambridge for very tiny fragments that so far haven’t been catalogued in the PGP, and at JTS for larger fragments, many of which are documents in the PGP.} Often a fragment was covered with writing: medieval scribes were nothing if not frugal. Paper and parchment were not exactly scarce, but they weren’t cheap, either, and writers often reused materials, flipping over a letter they had received to scribble down a financial account, or drafting a legal document on the back of another legal document, or writing a letter around the text of an official communiqué that a state bureaucrat had scrapped and shredded. We wanted to be able to display each of the documents on a single fragment discretely, but without losing its relationship to the other document(s) on the same piece of paper or parchment. 
+
+The converse situation was nearly as common: just as each fragment could contain more than one document, some documents were comprised of more than one fragment. This was because many documents were torn in the jumble of the synagogue geniza chamber, and fragments containing parts of the same document ended up in different libraries, or even in the same library under different shelfmarks. There are thousands of cases of the top half of a page in, say, New York and the bottom in Oxford, or the right and left side of the same page both in Cambridge, but under different shelfmarks and unbeknownst to the librarians. When specialists reunite these pieces of what used to be a single page, they call it a “join,” and finding one is a cause for celebration—perhaps not as momentous as discovering a new subatomic particle, but worthy of a champagne toast, satisfying in the same way as completing a puzzle or staving off just a little bit of entropy in the world. 
+
+A document can occupy more than one fragment, then, and a fragment can contain more than one document. That many-to-many relationship was the basis of our decision to build a relational database. 
+
+Doing so required us to walk away from a longstanding informational hierarchy that the field had taken for granted: that there is a base unit of analysis, whether the fragment or the document; one always seemed to be the star of the show. This implicit hierarchy had been baked into previous printed scholarship and digital tools, structuring the display of information in different ways. Libraries, since they are custodians of physical objects, tended to privilege the fragment. The Friedberg Genizah Project database followed suit and displayed images of fragments, since it was born as an imaging project. But scholarly editions focused on textual units such as documents, since their task was to present and analyze coherent textual units. The PGP, since it had been developed by historians, also tended to favor the document, but we were also aware that doing so entailed some loss of information: for example, if you had a legal document on one side of a fragment and a business letter on the other, they were two different entries in PGPv1–3, and the connection between the two wasn’t obvious. We wanted to make it clearer: the author of the second document had somehow gotten their hands on the first, and a document changing hands is relevant information to a historian. 
+
+Using a relational data model allowed us to sidestep this longstanding hierarchy and acknowledge the importance of both depending on the context. The fragment is what you request when you go to a library or search for a digital image; the document is what you transcribe when you create a text edition. PGP needed to account for both, and for the relationship between them. 
+
+%% TODO: do we want a diagram ? the one we have doesn't accurately represent things
+
+The many-to-many relationship between documents and fragments is but one example of our underlying data structure. It is a representative example in that it demonstrates the necessity of understanding something about geniza documents and the history of research on them in order to work with the data. In the next part of this essay, we will shift from the history of the project and the challenges that drove its software development over the years to the nature and structure of the current PGP datasets.
+
+\section{The nature and structure of the datasets}
+
+The process of rebuilding the PGP began in July 2020 and is now nearly complete—a five-year process from start to finish. But the rewards came long before the work wrapped up. In May 2021, we launched the new admin interface, and the pace at which the team added documents to the database rapidly accelerated. A good research infrastructure should encourage and inspire research, and ours quickly did just that, facilitating the production of robust datasets. 
+
+%% TODO: chart showing accumulation of pgp documents over time
+
+The PGP datasets that this essay describes are exported from the PGPv4 web application as multiple flat, tabular data files. They are exported from the PGPv4 web application, which is implemented in the Django framework and is backed by a relational database (PostgreSQL). Familiarity with the structure of the underlying database and choices made in modeling the data should make it easier to understand and work with the exported data, and to recombine the data as needed. 
+
+\begin{figure}[hb]
+  \includegraphics[width=\textwidth]{db-diagrams/pgpv4_dbdiagram_import.pdf}
+  \centering
+  \caption{Preliminary database diagram from project planning documents, October 2020. Annotations indicate proposed data migration from PGPv3 metadata spreadsheet.}
+  \label{fig:pgpv4_dbdiagram}
+\end{figure}
+
+
+\subsection{Fragments and Documents}
+
+In PGPv4, each fragment is correlated with a shelfmark, a holding institution, and a collection within that institution. Documents are correlated with other kinds of structured information, such as descriptions, tags, and the languages in which the documents are written. This relational data structure makes it easier to find and access documents that are written on the same fragment. In the PGPv4 web interface, documents written on the same fragment are linked under “related documents.”
+
+Fragments are identified by the shelfmarks assigned to them by their holding institutions. Documents have unique numeric identifiers we call PGPIDs. Shelfmarks rarely change; when they do, PGP includes both the new and the old shelfmark. PGPIDs change less rarely: sometimes duplicate documents are found and merged into a single PGPID. The PGPv4 web application tracks both historic shelfmarks and old PGPIDs to find records when identifiers have changed, but that information is not currently included in the data exports.
+
+\begin{figure}[h!]
+  \includegraphics[width=\textwidth]{db-diagrams/pgp v4.19 documents.png}
+  \centering
+  \caption{Database diagram showing relationships between documents and fragments.}
+  \medskip
+    \small
+  Generated from models in  PGP Django codebase v4.19. Translation text fields are omitted for simplicity.
+  \label{fig:pgpv4_db_documents}
+\end{figure}
+
+In SQL, a many-to-many relationship requires an additional database table to track pairs of related objects. A minimal implementation of this relationship would be a list of document and fragment id pairs, where each identifier occurs once for each related object; a document written on a single fragment would have one entry, where a document written across two fragments would have two entries with the same document id and two different fragment ids.  PGPv4 stores additional information about the relationship between a document and a fragment in this connecting table (refer to "TextBlock" table in Figure \ref{fig:pgpv4_db_documents}). These extra fields enable researchers describing documents to explicitly specify the order of fragments, add notes to identify the specific portion of a multifragment, or even to indicate an uncertain relationship. 
+
+\begin{wraptable}{l}{2.75in}
+\caption{Documents by number of fragments}
+\label{table:docs_per_numfrags}
+\begin{tabular}{rrr}
+\toprule
+{Fragments} & {Documents} & {\%}\\
+\midrule
+1 & 33,534 & 95.60\% \\
+2 & 1,173 & 3.34\% \\
+3 & 182 & 0.52\% \\
+4 & 87 & 0.25\% \\
+5 & 45 & 0.13\% \\
+6 & 24 & 0.07\% \\
+8-64 & 25 & 0.07\% \\
+\bottomrule
+\end{tabular}
+\end{wraptable}
+
+The majority of PGP documents—\singleFragmentDocuments, or more than 95\%—are written on a single fragment. They are not joins, and so are simple from a data modeling perspective. There are \totalJoins documents that are joins, most of them between two fragments, and some among more than two fragments (see Table \ref{table:docs_per_numfrags}). A small set of outlier documents are correlated with an unusually large number of fragments — 32, 34 and 64 respectively; these are multipage documents, and they are all notebooks containing the legal archives of a courtroom.
+
+\begin{wrapfigure}{r}{0.6\textwidth}
+\begin{center}
+  \includegraphics[width=0.6\textwidth]{charts/documents_per_num_frags.pdf}
+  \centering
+  \caption{Documents by number of fragments}
+  \label{fig:docs_per_num_frags}
+  \end{center}
+\end{wrapfigure}
+
+
+If we flip the question and ask how many fragments contain more than one document, again we find that the majority (nearly 90\%) contain a single document.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{charts/fragments_with_num_docs.pdf}
+  \centering
+  \caption{Fragments by number of documents}
+  \label{fig:frags_by_num_docs}
+\end{figure}
+
+The more complicated cases provide an opportunity to draw insights beyond the textual and visual contents of individual documents. The co-occurrence of different texts on the same fragment enables scholars to trace new histories of paper and parchment circulation and reuse. For instance, two petitions to the Fatimid ruler Sitt al-Mulk \autocite{noauthor_state_1024, noauthor_state_1021} were glued together by a Jewish scribe in need of a long vertical scroll on which to copy a liturgical text. By making the relationship between documents and fragments more explicit and easier to navigate, PGPv4 makes it easier to work across related documents and reused fragments.
+
+\subsection{Types, Descriptions, and Tags}
+
+Each document entry in the database includes three main metadata components: types, descriptions, and tags.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\linewidth]{charts/metadata_known_unknown.pdf}
+    \caption{Metadata fields and availability across documents}
+    \label{fig:metadata-status}
+\end{figure}
+
+\textbf{Types} are ways of categorizing documents according to their textual structure. Each document is categorized under a single type. There are nine types the PGP uses an intentionally simplified set of categories that Krakowski and Rustow developed over the course of several years of discussion and workshopping with other colleagues. The simplicity of this typology makes it easier to enter new documents into the database and to group like with like. 
+
+\begin{enumerate}
+    \item     \textbf{Credit instrument or private receipt}: letters of credit, commercial receipts, records of debt, records of payment. Excluded: financial transactions mentioned in legal documents.
+    \item \textbf{Legal document}: bills of sale, testimonies, quittances drawn up by courts (as distinct from private receipts), marriage contracts, divorce deeds, summaries of court cases.
+    \item \textbf{Legal query or responsum}: special types of legal texts either describing a case in order to solicit a legal opinion, or rendering a non-binding legal opinion on it.
+    \item \textbf{Letter}: correspondence between business associates and/or family members; official administrative letters from leaders of Jewish communities.
+    \item \textbf{List or table}: commercial accounts, grocery lists, genealogical lists, charity distribution tables, inventory lists, jottings in list or tabular form.
+    \item \textbf{Literary text}: not documents, but we include them in the PGP on a case-by-case basis if they capture significant historical information relevant to our documentary texts, for instance poems dedicated to known individuals; historical chronicles.
+    \item \textbf{Paraliterary text}: a confusing name inherited from the field of papyrology. These are documentary texts such as amulets, calendars, magic spells, prescriptions and recipes.
+    \item \textbf{State document}: official communiqué to or from government officials, including decrees, petitions, internal memoranda and tax receipts.
+    \item \textbf{Unknown type}: illegible, unidentified, or uncategorized text that requires further study.
+\end{enumerate}
+
+This nine-part typology addresses the need to reduce friction at two key stages of working with the data: entering a document for the first time and transcribing it. It reduces friction at the data-entry stage by avoiding complex decision trees. Although there are many more than eight templates that the scribes of the documents were following (or devising on the fly), when entering a document for the first time, picking through a massive list of document types places an undue burden on the researcher. These nine types cover nearly all the existing cases. 
+
+It reduces friction at the transcription stage by making it easier to find similar documents for reference, allowing researchers to compare documents easily in order to facilitate transcription. If you’re faced with the task of transcribing a document that is faded, torn or full of holes, looking at similar documents will help you fill in the blanks. True, scribes tended to use formulaic phrases the way experienced chefs use ingredients rather than slavishly following recipes; but the eight-part typology is a way of bringing similar documents together without overdetermining their shared features or misrepresenting the way scribes worked.
+
+There are currently \textbf{\totalDocuments} documents in PGP. The most common types are letters (\textbf\totalLetter) and legal documents (\textbf{\totalLegalDocument}). The current dataset includes \textbf{\totalUnknown} documents of unknown type, which usually means they have not yet been cataloged and described, or else that don’t fall into existing categories. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.0\textwidth]{charts/document_types.pdf}
+  \caption{Documents by Type}
+  \label{fig:document_types}
+\end{figure}
+
+Nearly all documents have \textbf{descriptions}. These are English-language summaries of the main contents of a document. (Some documents also have Hebrew-language descriptions culled from existing Hebrew-language scholarship.) Descriptions don’t follow a strict template, and they can range in size from terse to expansive. Most are brief, with an average of 271 characters and 45 tokens. They are generally structured as an inverted pyramid putting the main information—author, recipient, locations, dates—followed by the details, for instance: 
+
+\begin{quote}
+Letter from Nahray b. Nissim in Alexandria to his uncle Abū l-Khayr Mūsā b. Barhūn al-Tāhartī in Fustat. Dating (Gil): 11 or 12 April 1051. Nahray reports among other things that he had forgotten to bring his capitation tax receipt ‘for the year 441’ on a business trip. \autocite{noauthor_letter_1050}
+\end{quote}
+
+Descriptions are, by their nature, one place where the data’s unevenness emerges. Sometimes descriptions are short due to a lack of existing research on a document; in other cases, they are short because the documents entered into the database in the 1990s, before the team started including descriptions for non-specialists. Some of the longest descriptions are of documents that the PGP team identified recently, and they wanted to put as much information about them as possible into the database for future researchers. Others are for the opposite reason: because they’ve been in the database for a long time or have received copious attention in scholarship and accumulated a long trail of research and publications. 
+
+\textbf{Tags} are equally uneven. They are essentially free-text, and there is no restriction on the number of tags that can be applied to a document (although the interface has an auto-complete function to help researchers select preexisting tags rather than multiplying them needlessly). Existing tags do not reflect a concerted effort by the team to tag all our documents; rather, they represent our current and past research interests. 
+
+For example, one of our research team members, Alan Elbaum, wrote his master’s thesis on people’s descriptions of their physical ailments, so there are a great number of tags in the database related to illness. Since it is impossible to anticipate all the possible questions that future historians will bring to geniza documents, our goal is not to produce tags for some theoretical future researcher, but to flag themes or individuals of interest. Tags don’t, then, represent the current state of documentary geniza research; they are less like library subject headings and more PGP researchers’ post-it notes.
+
+The datasets contain \uniqueTags unique tags, of which \singletonTags are used only once. Some of the most commonly used ones are \texttt{\#account} (used for \taggedAccount and flagging a future attempt to decipher traders’ accounts); \texttt{\#communal} (used for \taggedCommunal documents reflecting the organizational levels of the Jewish community); \texttt{\#illness} and \texttt{\#illness letter 969-1517}  (used for \taggedIllness and \taggedIllnessLetter documents, respectively). 
+
+\subsection{Languages and Scripts}
+
+\begin{wraptable}{r}{3in}
+\caption{Common and Unidentified Languages}
+\label{table:langs_docs}
+\begin{tabular}{lr}
+\toprule
+Language/Script & Documents \\
+\midrule
+Judaeo-Arabic & 15,816 \\
+Arabic & 9,468 \\
+Hebrew & 7,617 \\
+Aramaic & 1,756 \\
+Ladino & 366 \\
+Greek/Coptic Numerals & 860 \\
+\midrule
+Unidentified language and script & 40 \\
+Unidentified (Hebrew script) & 22 \\
+Unidentified (Latin script) & 8 \\
+\bottomrule
+\end{tabular}
+\end{wraptable}
+
+Geniza materials are written in a variety of languages and scripts, including Judaeo-Arabic (a range of Arabic dialects and registers written in Hebrew characters), Hebrew, Aramaic and Ladino (a range of medieval Romance dialects and registers written in Hebrew characters).
+
+To simplify the data structure, we modeled languages and scripts as a single entity, so that both language and script are explicitly documented (refer to Table \ref{table:langs_docs} for the number of documents with the most common languages; documents can have multiple languages, so these totals may include the same documents more than once). 
+
+Greek/Coptic numerals are a special case, since it is not a language but a writing system specifically for numerals: many scribes who knew neither Greek nor Coptic wrote alphanumerals derived from Coptic (and, in turn, from Greek). We thought that was worth tracking separately, so Greek/Coptic numerals is a language/script category distinct from either Greek or Coptic.
+
+We also include a few categories of unknown languages and scripts, which may be of interest to scholars interested in tackling a challenge (refer to Table \ref{table:langs_docs} for a list of unidentified or partially unidentified languages and scripts, with the associated number of documents). This designation indicates a researcher has examined the document and could identify the script but not the language, or could not even identify the script.
+
+The authors of Geniza documents often employed a mix of languages. Our data model allows documents to have multiple languages. Of the \documentsAnyLang documents with language information, \documentsMultiLang (\percentDocsMultiLang) have multiple languages. The most common combinations are Judaeo-Arabic with Hebrew and Judaeo-Arabic with Arabic. 
+
+\begin{figure}[hbt]
+  \centering
+  \includegraphics[width=\textwidth]{charts/primary_language_upsetplot.png}
+  \caption{An UpSet plot of primary language combinations, for languages that occur at least 200 times.}
+    \medskip
+    \small
+    The upper bar chart shows the number of documents with different set of languages or language combinations; the bar chart at left shows the size of each individual category. The provide a visual indicator of the categories at left and the combinations represented in the upper bar chart.\footnotemark
+  \label{fig:lang_combination_upset_plot}
+\end{figure}
+
+\footnotetext{For more on UpSet plots and the challenges of visualizing overlapping combinations when there are more than four sets, read Koeser's \citetitle{koeser_visualizing_2020}.}
+
+We also distinguish between “primary language,” meaning that most of the document is written in it, and “secondary language,” meaning it is used only incidentally (some common combinations are Arabic addresses or Greek/Coptic numerals in Judaeo-Arabic documents). In practice, distinguishing between primary and secondary languages depends on the researcher’s language proficiency and attention to detail. Even seasoned geniza researchers may miss some code-switching, since they are so accustomed to it; others may argue that the incidental use of Hebrew and Aramaic is inherently part of Judaeo-Arabic, so a few words in Hebrew or Aramaic should not be marked as secondary language. The team has not yet developed a quantitative threshold for distinguishing primary from secondary languages, then; these categories could be reviewed and firmed up in the future, perhaps with the help of HTR or another machine-learning-based philological tool.
+
+\subsection{Dates and Calendars}
+
+Geniza documents date from the ninth to the early twentieth century. But they are not evenly distributed: most documents date to the eleventh, twelfth and thirteenth centuries, with significant later clusters from the sixteenth and nineteenth centuries that have received less attention than they deserve.
+
+Situating documents chronologically is essential for historians, because it allows them to interpret them more accurately and contextualize them. But fragmentary documents can be challenging to date; Rustow has written elsewhere about the challenges and different types of uncertainty in dating geniza documents \autocite{rustow_dating_nodate}. Even documents containing explicit dates sometimes note the day and month but omit the year, which in the case of letters was usually obvious to both sender and recipient. 
+
+When a document explicitly notes the date, we call it “date on document” and consider it authoritative. This isn’t always the date on which the document was written, but it is usually close enough to serve as a reference point. Documents rarely have more than one date; when they do, we use whichever one is latest. In other cases, the date can be inferred based on the people or events the document mentions, or coins it mentions that were minted and circulated in limited periods \autocite{dudley_coins_2023}. Some scholars are able to infer the date of documents based on handwriting, either because an individual’s writing is well-known or because the style of writing occurred only in a certain period. For instance, the scribe Ḥalfon b. Menashshe, a Jewish legal clerk in Fustat active in the first half of the twelfth century, has a distinctive handwriting that allows for confident document dating \autocite{elbaum_halfon_nodate}; a highly cursive Iberian style of writing became common in Egypt starting in the late fifteenth century.
+
+The PGP currently has 4,305 dated documents, of which 4,005 have a date on the document itself and 300 documents have inferred dates. 
+
+Most of the surviving dates on documents use non-Gregorian calendars. The year systems include the Jewish year (\textit{anno mundi}), the Seleucid year, the Islamic (\textit{hijrī}) year and the Egyptian fiscal (\textit{kharājī}) year. Months include the Jewish, Coptic and Islamic months, and sometimes a single date will mix and match calendars. 
+
+The PGP supports multiple calendars; starting with version 4.5 (released in June 2022), PGP provides automatic parsing and conversion for Seleucid, \textit{hijrī} and \textit{anno mundi} dates to Common Era dates (Julian before 1583, Gregorian after). This enables documents to be sorted, filtered, and compared in a unified chronology, and to be understood by non-expert audiences.\footnote{Calendar conversion is implemented using the Python \texttt{convertdate} library, with additional logic to handle the Seleucid calendar.}
+
+In both the PGPv4 web interface and the published datasets, we preserve and publish both the original calendar and the converted dates, since they are useful for different kinds of analysis.
+
+\subsection{Scholarship Records}
+
+One of the driving principles of PGPv4 was that any encounter of a human mind with a geniza document is worth preserving: the material is so challenging that it helps seeing prior attempts to understand it, even when they were inconclusive. Goitein understood this principle deeply, and that seems to have been one of his motivations for retaining all his research notes in such an organized and systematic fashion.\footnote{See Goitein's \citetitle{goitein_involvement_1974}, especially section 4, which in retrospect reads uncannily like a blueprint for PGPv4.} Like other digital humanities projects, PGP is both “a work of scholarship and an instrument of scholarship,” publishing and building on existing research while also enabling new scholarship \autocite[2]{kotin_world_2024}.
+
+\begin{wraptable}{r}{2.5in}
+\caption{Scholarship sources}
+\label{table:scholarship_sources}
+\begin{tabular}{lrr}
+\toprule
+Type & Sources & Footnotes \\
+\midrule
+Unpublished & 252 & 14,832 \\
+Article & 240 & 656 \\
+Book & 90 & 6,456 \\
+Book Section & 55 & 214 \\
+Dissertation & 20 & 933 \\
+Blog & 1 & 1 \\
+\bottomrule
+\end{tabular}
+\end{wraptable}
+
+All the more important, then, to distinguish clearly between existing and new research: the PGP builds on a substantial scholarly record of both published and unpublished materials, most notably but not solely Goitein’s transcriptions, translations, and index cards. Other scholarship included in the database includes books, book chapters, articles, dissertations and blog posts, as well as unpublished transcriptions by Goitein’s students, their students and their students’ students, down to current project researchers (see Table \ref{table:scholarship_sources}). 
+
+PGPv4 attaches evidence or sources to database entries using a database footnotes module, which we adapted from previous projects developed at CDH \autocite{koeser_princeton-cdhmep-django_2022, koeser_derrida-django_2021}.\footnote{CDH footnotes modules were originally inspired by Jean Bauer’s approach to database footnotes, which were designed to allow for conflicting evidence, indicating “whether or not that source supports the information in the record” (\citeyear{noauthor_tales_2012}).} They are implemented with Django’s “Generic Foreign Key”, which uses a combination of content type and object identifier to identify any record in the database, for example the document database table, and a document record primary key or PGPID. In the Shakespeare and Company Project, this approach was used to provide references to the archival source materials the data draws on \autocite[18]{kotin_shakespeare_2022}. In this project, we augmented the footnotes by adding a field indicating how the source relates to a specific document and whether it provides a transcription, translation, and/or discussion of it. References are included in the footnote data export as plain text.
+
+\subsection{Transcriptions and Translations}
+Transcriptions have long been the gold standard in documentary \textit{geniza }research: the texts are often difficult to read and always contain unique, historically valuable information not found in other historical repositories, so every word is precious and worth the effort to  decipher and preserve. Translations, of course, make the material available to a wider pool of researchers. 
+
+By default, the site displays images, transcriptions and translations side-by-side (provided that all three exist for a given document). Users may choose to suppress any one of them from the view temporarily. The dataset exports contain transcriptions and translations as …
+
+Users will notice symbols in the transcriptions and translations such as square brackets, parentheses, curly brackets, ellipses and double brackets. Over the past century, a set of best practices has evolved for scholarly transcription known as the Leiden conventions that use, for instance, square brackets to enclose the editor’s suggested reconstruction of missing text (as when the manuscript is torn, faded or abraded).\footnote{https://en.wikipedia.org/wiki/Leiden\_Conventions} In 2021, the PGP team developed a more streamlined version of the Leiden conventions that it uses for new transcriptions. (Some of the older, printed transcriptions in the PGP use a slightly different version of the Leiden conventions; the team has not yet brought them into line with its updated version.)
+
+\subsection{Images of Fragments}
+
+It is much easier to make sense of geniza documents when you can access the fragments themselves or digital images of them. The visual information contained in a fragment can enable an experienced geniza scholar to determine the genre of the text at a glance, and whether it was an official version of a document or the notes of a scribe preparing to write one. High resolution images also enable scholars to correct the transcriptions that previous generations had made from photstats, microfilms or even the originals. For all those reasons, PGPv4 was determined to include digital images, and to capitalize on the affordances of the International Image Interoperability Framework (IIIF) APIs.
+
+IIIF provides a standardized mechanism for linking to images managed and preserved by multiple institutions and is seeing increasing adoption by libraries and museums around the world. The three largest \textit{geniza }collections in the world have made their materials available in IIIF-compliant images: tens of thousands of fragments from the Cambridge University Library, which houses around 200,000 fragments; all of the 43,000 fragments at the Jewish Theological Seminary (JTS) in New York and all of the 17,000 fragments at the University of Manchester. (The remaining collections will be made publicly available online and IIIF-compliant over the coming years by the National Library of Israel.) For all these reasons, we chose to leverage IIIF APIs for referencing and displaying images whenever possible.
+
+We decided to support IIIF images only because we did not have the capacity to publish and preserve images as part of the PGPv4 application—or want to, given that qualified institutions are already handling that important work. In some cases, our commitment to IIIF required us to wait for institutions to migrate digitized images into more modern systems (for example, the\textit{ geniza} materials at the University of Pennsylvania, which we were able to import into PGPv4 in 2023). In other cases, IIIF image publication required creativity and additional organizational and technical work.
+
+For instance, JTS holds 10.75\% of the geniza, but because it is a smaller institution without the technical infrastructure to host IIIF images, we built on the Princeton Geniza Lab’s previous agreements to share their materials for research and brokered an agreement enabling the Princeton University Library (PUL) to host and publish their images, making them IIIF compliant. In another case, the Bodleian Library at the University of Oxford (more than 12,000 fragments) made its digitized images and metadata available online with permissive licenses, but they were not IIIF compliant, so we wrote scripts to convert their XML into IIIF manifests, leaning on the PUL infrastructure to serve the images as IIIF. In yet another case, the University of Manchester images were already IIIF compliant, but using a different structure from the one that the PGPv4 had assumed based on Cambridge’s images: rather than one manifest per fragment, with front and back images grouped as in Cambridge, Manchester had published each image in its own manifest, with identifiers linking to the “obverse” image. Rather than complicate the PGPv4 code to support this new image data structure, we wrote custom scripts to remix these image manifests to match the structure we had assumed. Since IIIF manifests are simple JSON documents, these are published statically on GitHub pages and reference the IIIF images served out by Manchester. In all cases, we have preserved and displayed the image ownership records and the reuse permissions clearly, both in our revised manifests and alongside the images as they are displayed on the PGPv4 site.
+
+One of the benefits of IIIF is that it makes it possible to display multiple fragments for a single document, even if they are from different collections—indispensable for displaying joins. Moreover, the PGPv4 admin interface allows data curators to suppress images in order to display only those relevant for a particular document—for example, omitting the verso if only the recto is needed—and to reorder and rotate them so that they display in the correct sequence and orientation. The PGPv4 system does not currently support stitching fragment images together, although in principle it could with further software development; but it is still invaluable to see all the fragments of a single document together, even when they are held by different libraries.
+
+[note: data exports don’t currently include our arrangement of the images with these overrides; I propose we describe that as being included in a future version of of the datasets so it isn’t a blocker to submitting this essay for review; hopefully they’ll be included by the time we’re revising for publication]
+
+\subsection{People and Places}
+
+In November 2024, the PGP team released a major update, v4.18, which added two new modules to the site: People and Places. These modules allow the team to create records for any location or individual appearing in the documentary \textit{geniza }corpus. People and places are accessible from document records or from their own sections of the PGP website.
+
+The People module now includes more than 1,100 records for people from PGP documents. Each record includes links to the documents in which that person appears, as well as their social role(s) and their relationship to the document (recipient of a letter, for example, or signatory on a legal deed). In the dataset, …
+
+The People module has two main purposes. The first is to enable researchers to build network graphs to identify related people, whether extended families, trade networks or members of the congregation that prayed in the medieval synagogue where the Cairo Geniza survived. Its second purpose is to help researchers determine the date-ranges of undated documents. If an undated document mentions someone who also appears in documents dated between 1111 and 1137, then we have a clue to that document’s inferred date-range.
+
+As for the Places module, it now records nearly 300 historical place names related to PGP documents, with GIS coordinates to allow for geographical analysis. An in-progress update to the project will distinguish between specific sites such as cities, towns and villages, and less specific regions. Each place is linked to the documents in which it appears, as well as some of the people connected with it; Fustat, the medieval residential core of Cairo, unsurprisingly has the largest number of linked documents so far, 331, although this is very likely a gross undercount; a more indicative number is Raʾs Tīnī in Libya, with seven documents; xxx places have just one document listed each. Once the team has more fully populated the data in the Places module, they will be able to determine which places other than Fustat and Cairo are most commonly mentioned in \textit{geniza }documents—providing, in turn, a valuable quantitative check on the field’s impressionistic representation of certain places as important, such as Alexandria, Jerusalem, Damascus and Palermo.
+
+\subsection{Dataset versioning and frequency of change}
+
+tbd
+
+\begin{itemize}
+    \item Description of plan and rationale for regular publication of datasets (probably quarterly; for official citable versions, replication, check points for comparison over time)
+    \item provide some summary analysis/viz of how the datasets have changed over time so far, since we’ve been collecting them on github, to give some sense of the volatility and growth
+    \begin{itemize}
+        \item E.g., total number of documents, how many added/modified by week
+        \item From 2024-03-06 meeting: \# of documents, \# transcriptions, \# translations (\# images?) over time. (tags? Descriptions / description length?)
+    \end{itemize}
+\end{itemize}
+
+
+\section{Ongoing and Future Work}
+
+The Cairo Geniza has long had a fascinating, puzzle-box like quality for scholars. Specialists still routinely make new discoveries, some important, some whimsical. Alan Elbaum recently discovered an unknown document written in the handwriting of Moses Maimonides (1138–1204), a philosopher and physician who spent the last forty years of his life in Fustat and is perhaps the most famous Jewish person of the Middle Ages \autocite{ashur_new_2024, noauthor_list_nodate}. Koeser came across a delightful drawing of a Nile boat (Figure \ref{fig:pgpid8483}) while working on the random sort feature for PGP v4.2 in March 2022; as it turns out, Goitein had known of the fragment, but no one had yet described it in the PGP \autocite{noauthor_paraliterary_nodate}. The development of PGPv4 and the publication of these datasets we hope bear the potential to open up the materials and their many remaining discoveries to work by scholars in new areas of expertise. 
+
+\begin{figure}[h!]
+  \includegraphics[height=4in]{MS_TS-K-5-2_detail.jpg}
+  \centering
+  \caption{Recto of T-S K5.82 containing a drawing of a Nile boat \autocite{noauthor_paraliterary_nodate}.}
+  \label{fig:pgpid8483}
+\end{figure}
+
+ The Princeton Geniza Lab is continuing to expand and improve the PGP data, including the filing out the People and Places modules and adding new transcriptions and translations. The project has drawn engagement from students eager to work with humanities data and to contribute to active research projects. Undergraduate projects have included network graphs and visualizations, automatic image rotation, Handwritten Text Recognition (HTR), and data cleaning and refinement to help with cataloging efforts. 
+
+An ongoing partnership between Rustow and Daniel Stökl Ben-Ezra \autocite{noauthor_handwritten_nodate} has been leveraging the eScriptorium platform to train and fine-tune HTR models to segment and transcribe PGP materials written in Hebrew script; the project uses the existing PGP scholarly transcriptions as a starting point for training data. The transcriptions these models help generate will eventually be incorporated into the PGPv4 database and datasets, expanding the textual content available for researchers to analyze.
+
+As the amount of full-text content increases, so too will the data’s research potential. The need will also become more acute to leverage scalable computational methods, including natural language processing (NLP), machine learning and multimodal language models. One current effort, led by the Princeton Geniza Lab’s research software engineer, Mohamed Abdellatif, is adapting and refining an existing solution for transliterating Judaeo-Arabic to Arabic \autocite{weisberg_mitelman_code-switching_2024}, applying it to PGP transcriptions of Judaeo-Arabic texts to make them more broadly accessible to the Arabic-reading public \autocite{abdellatif_machine_2025}. His effort will also make the content more computationally accessible, since transliteration will allow researchers to work with the material using existing Arabic language models and other NLP tools.
+
+Other projects have also been inspired by PGPv4. Koeser is now leading a collaboration to develop the Python library \texttt{undate} for reasoning with uncertain and partially known dates \autocite{koeser_undate_2024}. This library incorporates and generalizes PGPv4’s solutions for calendar conversion and ambiguous dates, with improved parsing and temporal logic, and may eventually be reintegrated into PGPv4 to improve date handling. It has the potential to make it easier to work with the dates in the PGP datasets and others like them.
+
+Other possibilities include mining specific subsets of PGP materials for information, such as epistolary networks from letters, or analysis of the kinds of legacies inherited through wills. The availability of images in combination with descriptions and transcriptions offers possibilities for multimodal analysis, such as clustering documents visually to identify similar scribal characteristics or individual hands, or identifying other unsuspected commonalities across the materials. Combining PGP data with other datasets and sources, such as the historic coins identified by Dudley and Elbaum or the historical places in the World Historical Gazetteer offers yet more opportunities for new discoveries.
+
+As a long-running project, the PGP metadata offer the possibility of a meta-analysis of digital research projects: how have the affordances of changing technologies affected data entry? Tagging and description by researchers with particular interests have resulted in some unevenness of the data, but are footprints detectable across the archive that surface some details but miss others?
+
+\pagebreak
+\defbibnote{preamble}
+
+\printbibliography[prenote={preamble}]
+
+\end{document}
