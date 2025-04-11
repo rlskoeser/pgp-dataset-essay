@@ -17,7 +17,7 @@
 %#DeclareUnicodeCharacter{02BF}{‘}
 
 \title{Princeton Geniza Project datasets}
-\author{Rebecca Sutton Koeser and Marina Rustow}
+\author{Rebecca Sutton Koeser and Marina Rustow\footnotemark}
 
 \date{April 2025}
 
@@ -70,7 +70,7 @@
 \begin{document}
 
 \maketitle
-
+\footnotetext{The authors would like to thank Mohamed Abdellatif, Amel Bensalim, Rachel Richman, Ksenia Ryzhova, Laure Thompson and Jeri Weiringa for their helpful comments and suggestions on previous drafts of this essay, and for Ksenia Ryzhova for her logistical support during the final stages of completion. }
 \section{Introduction}
 
 \begin{figure}[h!]
@@ -112,7 +112,7 @@ Although PGPv4 is backed by a relational database, it was always part of the pla
 
 \section{The History of the PGP and Its Data}
 
-The PGP datasets we are now publishing are the result of a long history of work on the project by its many researchers and software engineers.
+The PGP datasets we are now publishing are the result of a long history of work by many researchers and software engineers.  The history of the PGP \textit{is} the research and technical work that led to these datasets, and the current data still is informed and impacted by its origins and many transformations.
 
 \subsection{Origins of the Project}
 
@@ -136,7 +136,7 @@ But then technology continued to develop apace. Batke had solved the indexing an
 
 \subsection{PGPv2}
 
-The advent of the internet led to the development of PGPv2, designed by Rafael Alvarado, Batke’s successor as humanities computing consultant at Princeton. Alvarado made the content of PGPv1 available online for the first time by migrating it to a web application he called TextGarden, which stored the documents in Extensible Markup Language (XML) and took advantage of a flexible relational model by indexing them as a network. TextGarden built on the text encoding and interface affordances of dynamic HTML, representing Hebrew and Arabic script using Unicode. Thus began the first major PGP migration from local terminals and floppy disks to a globally available website.\footnote{ Our thanks to Rafael Alvarado for contributing to this write up of his work on TextGarden.} 
+The advent of the internet led to the development of PGPv2, designed by Rafael Alvarado, Batke’s successor as humanities computing consultant at Princeton. Alvarado made the content of PGPv1 available online for the first time by migrating it to a web application he called TextGarden, which stored the documents in Extensible Markup Language (XML) and took advantage of a flexible relational model by indexing them as a network. TextGarden built on the text encoding and interface affordances of dynamic HTML, representing Hebrew and Arabic script using Unicode. Thus began the first major PGP migration from local terminals and floppy disks to a globally available website.\footnote{Our thanks to Rafael Alvarado for contributing to this write up of his work on TextGarden.} 
 
 Migrations can be both liberating and treacherous for data. This one came with a vast improvement and some minor losses. The improvement was the Unicode text encoding system, which allowed multiple writing systems to be displayed at the same time. Before Unicode, web pages were able to display text in only one writing system at a time.\footnote{Unicode Standard Version 1.0, Volume 2 was printed in 1992; the work leading up to it included substantial efforts to support a large number of Arabic ligatures \autocite{noauthor_chronology_nodate}. Unicode and font implementations still make assumptions about languages that don't necessarily hold for the languages used in PGP materials, for instance the need to use Arabic vowels with Hebrew consonants.} This was a problem for many geniza documents, especially letters: when Jewish traders wrote to their colleagues in Judaeo-Arabic, for example, they would often write the addresses in Arabic script, since mail carriers more often than not didn't read Hebrew. Many letters are therefore in both Hebrew and Arabic script. Before Unicode, there was no way to display the transcriptions accurately. The team devised a workaround: transliterating the Arabic addresses into Hebrew script. But this misrepresented the original and also departed from best practices in the field. After Unicode, the texts could be displayed as written. (As of 2024, our team still occasionally finds addresses in Hebrew characters only to discover in comparison with the manuscript that they should be in Arabic characters—lingering artifacts of the pre-Unicode workaround.) 
 
@@ -210,9 +210,7 @@ The many-to-many relationship between documents and fragments is but one example
 
 The process of rebuilding the PGP began in July 2020 and is now nearly complete—a five-year process from start to finish. But the rewards came long before the work wrapped up. In May 2021, we launched the new admin interface, and the pace at which the team added documents to the database rapidly accelerated. A good research infrastructure should encourage and inspire research, and ours quickly did just that, facilitating the production of robust datasets. 
 
-%% TODO: chart showing accumulation of pgp documents over time
-
-The PGP datasets that this essay describes are exported from the PGPv4 web application as multiple flat, tabular data files. They are exported from the PGPv4 web application, which is implemented in the Django framework and is backed by a relational database (PostgreSQL). Familiarity with the structure of the underlying database and choices made in modeling the data should make it easier to understand and work with the exported data, and to recombine the data as needed. 
+The PGP datasets that this essay describes are exported from the PGPv4 web application as multiple flat, tabular data files. They are exported from the PGPv4 web application, which is implemented in the Django framework and is backed by a relational database (PostgreSQL). Familiarity with the structure of the underlying database and choices made in modeling the data should make it easier to understand and work with the exported data, and to recombine the data. 
 
 \begin{figure}[!ht]
   \includegraphics[width=\textwidth]{db-diagrams/pgpv4_dbdiagram_import.pdf}
@@ -262,7 +260,7 @@ In SQL, a many-to-many relationship requires an additional database table to tra
 \end{table}
 %\end{wraptable}
 
-The majority of PGP documents—\singleFragmentDocuments, or more than 95\%—are written on a single fragment. They are not joins, and so are simple from a data modeling perspective. There are \totalJoins documents that are joins, most of them between two fragments, and some among more than two fragments (see Table \ref{table:docs_per_numfrags}). A small set of outlier documents are correlated with an unusually large number of fragments — 32, 34 and 64 respectively; these are multipage documents, and they are all notebooks containing the legal archives of a courtroom.
+The majority of PGP documents—\singleFragmentDocuments, or more than 95\%—are written on a single fragment. They are not joins, and so are simple from a data modeling perspective. There are \totalJoins\space documents that are joins, most of them between two fragments, and some among more than two fragments (see Table \ref{table:docs_per_numfrags}). A small set of outlier documents are correlated with an unusually large number of fragments — 32, 34 and 64 respectively; these are multipage documents, and they are all notebooks containing the legal archives of a courtroom.
 
 
 \begin{figure}[!hbt]
@@ -330,19 +328,18 @@ It reduces friction at the transcription stage by making it easier to find simil
 
 There are currently \textbf{\totalDocuments} documents in PGP. The most common types are letters (\textbf\totalLetter) and legal documents (\textbf{\totalLegalDocument}; see Figure \ref{fig:document_types}). The current dataset includes \textbf{\totalUnknown} documents of unknown type, which usually means they have not yet been cataloged and described, or else that don’t fall into existing categories. 
 
-Nearly all documents have \textbf{descriptions}. These are English-language summaries of the main contents of a document. (Some documents also have Hebrew-language descriptions culled from existing Hebrew-language scholarship.) Descriptions don’t follow a strict template, and they can range in size from terse to expansive. Most are brief, with an average of 271 characters and 45 tokens. They are generally structured as an inverted pyramid putting the main information—author, recipient, locations, dates—followed by the details, for instance: 
+All documents have \textbf{descriptions}, although some of them may be short. These are English-language summaries of the main contents of a document. (Some documents also have Hebrew-language descriptions culled from existing Hebrew-language scholarship.) Descriptions don’t follow a strict template, and they can range in size from terse to expansive. Most are brief, with an average of 271 characters and 45 tokens. They are generally structured as an inverted pyramid putting the main information—author, recipient, locations, dates—followed by the details, for instance: 
 
 \begin{quote}
 Letter from Nahray b. Nissim in Alexandria to his uncle Abū l-Khayr Mūsā b. Barhūn al-Tāhartī in Fustat. Dating (Gil): 11 or 12 April 1051. Nahray reports among other things that he had forgotten to bring his capitation tax receipt ‘for the year 441’ on a business trip. \autocite{noauthor_letter_1050}
 \end{quote}
-
 Descriptions are, by their nature, one place where the data’s unevenness emerges. Sometimes descriptions are short due to a lack of existing research on a document; in other cases, they are short because the documents entered into the database in the 1990s, before the team started including descriptions for non-specialists. Some of the longest descriptions are of documents that the PGP team identified recently, and they wanted to put as much information about them as possible into the database for future researchers. Others are for the opposite reason: because they’ve been in the database for a long time or have received copious attention in scholarship and accumulated a long trail of research and publications. 
 
 \textbf{Tags} are equally uneven. They are essentially free-text, and there is no restriction on the number of tags that can be applied to a document (although the interface has an auto-complete function to help researchers select preexisting tags rather than multiplying them needlessly). Existing tags do not reflect a concerted effort by the team to tag all our documents; rather, they represent our current and past research interests. 
 
 For example, one of our research team members, Alan Elbaum, wrote his master’s thesis on people’s descriptions of their physical ailments, so there are a great number of tags in the database related to illness. Since it is impossible to anticipate all the possible questions that future historians will bring to geniza documents, our goal is not to produce tags for some theoretical future researcher, but to flag themes or individuals of interest. Tags don’t, then, represent the current state of documentary geniza research; they are less like library subject headings and more PGP researchers’ post-it notes.
 
-The datasets contain \uniqueTags unique tags, of which \singletonTags are used only once. Some of the most commonly used ones are \texttt{\#account} (used for \taggedAccount and flagging a future attempt to decipher traders’ accounts); \texttt{\#communal} (used for \taggedCommunal documents reflecting the organizational levels of the Jewish community); \texttt{\#illness} and \texttt{\#illness letter 969-1517}  (used for \taggedIllness and \taggedIllnessLetter documents, respectively). 
+The datasets contain \uniqueTags\space unique tags, of which \singletonTags\space are used only once. Some of the most commonly used ones are \texttt{\#account} (used for \taggedAccount\space and flagging a future attempt to decipher traders’ accounts); \texttt{\#communal} (used for \taggedCommunal\space documents reflecting the organizational levels of the Jewish community); \texttt{\#illness} and \texttt{\#illness letter 969-1517}  (used for \taggedIllness\space and \taggedIllnessLetter\space documents, respectively). 
 
 \subsection{Languages and Scripts}
 
@@ -447,7 +444,7 @@ All the more important, then, to distinguish clearly between existing and new re
 PGPv4 associates evidence or sources with database records by means of database "footnotes," a solution  we adapted from previous projects developed at CDH (\citeyear{koeser_princeton-cdhmep-django_2022, koeser_derrida-django_2021}).\footnote{CDH footnotes modules were originally inspired by Jean Bauer’s approach to database footnotes, which were designed to allow for conflicting evidence, indicating “whether or not that source supports the information in the record” (\citeyear{noauthor_tales_2012}).} Footnotes are implemented with a Django “Generic Foreign Key,” which uses a combination of content type and object identifiers to identify any record in the database; for example, the document database table, and a document record primary key or PGPID. In the Shakespeare and Company Project, this approach was used to link book borrowing data to the archival sources the information was drawn from \autocite[18]{kotin_shakespeare_2022}. For PGPv4, we augmented the footnotes with a document relation field to indicates what information the source provides for this specific document; currently, one or more of  transcription ("Edition" or "Digital Edition"), translation, or discussion. Scholarship records are described in the \texttt{sources} data in the PGP datasets, which provides citation information and the number of footnotes associated with that source.
 
 \subsection{Transcriptions and Translations}
-Transcriptions have long been the gold standard in documentary \textit{geniza }research: the texts are often difficult to read and always contain unique, historically valuable information not found in other historical repositories, so every word is precious and worth the effort to decipher and preserve. Translations, of course, make the material available to a wider pool of researchers. 
+Transcriptions have long been the gold standard in documentary \textit{geniza }research: the texts are often difficult to read and always contain unique, historically valuable information not found in other historical repositories, so every word is precious and worth the effort to decipher and preserve. Translations, of course, make the material available to a wider pool of researchers.
 
 In the PGPv4 database, transcriptions and translations are stored and managed in the W3C annotation format with minimal HTML formatting; annotations are linked to images, when they are available. The dataset exports include a plain-text version of the transcription and translation content, which is included in the content field of the the \texttt{footnotes} data. The document relations "Digital Edition" and "Digital Translation" indicate a record that has  transcription or translation content available within PGP data. Footnotes with "Edition" and "Translation" indicates a scholarly source that has a transcription or translation of a document that is not available in PGPv4. The language of the translation can be determined based on the language of the associated source, typically English and Hebrew.
 
