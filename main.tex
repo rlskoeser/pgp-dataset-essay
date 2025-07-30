@@ -34,38 +34,40 @@
 \bibliography{references.bib} 
 
 % TODO: confirm that total joins are being calculated correctly
-
 %% numbers from data
-\def\totalDocuments{35,090}
-\def\singleFragmentDocuments{33,544}
-\def\totalJoins{1,546}
-\def\totalLetter{11,202}
-\def\totalLegalDocument{8,075}
-\def\totalListOrTable{5,401}
-\def\totalUnknown{4,181}
-\def\totalLiteraryText{2,341}
-\def\totalStateDocument{2,081}
-\def\totalParaliteraryText{1,126}
-\def\totalCreditInstrumentOrPrivateReceipt{551}
-\def\totalLegalQueryOrResponsum{132}
-\def\uniqueTags{2,671}
+\def\totalDocuments{35,194}
+\def\singleFragmentDocuments{33,644}
+\def\totalJoins{1,550}
+\def\totalLetter{11,212}
+\def\totalLegalDocument{7,868}
+\def\totalListOrTable{5,415}
+\def\totalUnknown{4,175}
+\def\totalLiteraryText{2,338}
+\def\totalStateDocument{2,096}
+\def\totalParaliteraryText{1,130}
+\def\totalCreditInstrumentOrPrivateReceipt{554}
+\def\totalLegalQueryOrResponsum{401}
+\def\totalInscription{5}
+\def\uniqueTags{2,674}
 \def\taggedDimme{1640}
-\def\taggedAccount{756}
+\def\taggedAccount{759}
 \def\taggedCommunal{751}
 \def\taggedIllness{691}
-\def\taggedArabicScript{655}
-\def\taggedIllnessLetter{646}
-\def\singletonTags{1,069}
+\def\taggedIllnessLetter{648}
+\def\taggedArabicScript{629}
+\def\singletonTags{1,064}
 \def\totalLangauges{54}
-\def\documentsNoLang{6,195}
-\def\documentsAnyLang{28,895}
-\def\documentsOneLang{22,333}
-\def\documentsMultiLang{6,562}
+\def\documentsNoLang{6,161}
+\def\documentsAnyLang{29,033}
+\def\documentsOneLang{22,443}
+\def\documentsMultiLang{6,590}
 \def\percentDocsMultiLang{22.7\%}
 \def\percentDocsMonoLang{77.3\%}
-\def\totalDatedDocs{4,375}
-\def\totalDateOnDoc{4,059}
-\def\totalInferredDate{316}
+\def\totalDatedDocs{4,455}
+\def\totalDateOnDoc{4,127}
+\def\totalInferredDate{328}
+\def\totalPeopleRecords{1333}
+\def\totalPlaceRecords{409}
 
 \begin{document}
 
@@ -288,7 +290,7 @@ The majority of PGP documents—\singleFragmentDocuments, or more than 95\%—ar
 
 If we flip the question and ask how many fragments contain more than one document, again we find that the majority (nearly 90\%) contain a single document.
 
-The more complicated cases provide an opportunity to draw insights beyond the textual and visual contents of individual documents. The co-occurrence of different texts on the same fragment enables scholars to trace new histories of paper and parchment circulation and reuse. For instance, two petitions to the Fatimid ruler Sitt al-Mulk \autocite{noauthor_state_1024, noauthor_state_1021} were glued together by a Jewish scribe in need of a long vertical scroll on which to copy a liturgical text. By making the relationship between documents and fragments more explicit and easier to navigate, PGPv4 makes it easier to work across related documents and reused fragments.
+The more complicated cases provide an opportunity to draw insights beyond the textual and visual contents of individual documents. The co-occurrence of different texts on the same fragment enables scholars to trace new histories of paper and parchment circulation and reuse. For instance, two petitions to the Fatimid ruler Sitt al-Mulk \autocite{noauthor_state_1024, noauthor_state_1021} were glued together by a Jewish scribe in need of a long vertical scroll on which to copy a liturgical text . By making the relationship between documents and fragments more explicit and easier to navigate, PGPv4 makes it easier to work across related documents and reused fragments.
 
 \subsection{Types, Descriptions, and Tags}
 
@@ -377,7 +379,7 @@ Because the authors of Geniza documents often employed a mix of languages, our d
 
 \begin{figure}[!hbt]
   \centering
-  \includegraphics[width=0.8\textwidth]{charts/primary_language_upsetplot.png}
+  \includegraphics[width=0.8\textwidth]{charts/primary_language_upsetplot.pdf}
   \caption{An UpSet plot of documents by primary languages, including languages that occur at least 200 times.}
     \medskip
     \small
@@ -467,7 +469,7 @@ Using IIIF has another advantage: it enables us to display the images of multipl
 
 \subsection{People and Places}
 
-The PGP datasets include information about people and places associated with the documentary \textit{geniza }corpus. The data currently includes more than 1,100 people and 300 places, and will continue to grow and add more connections. Information about people and places can fuel the analysis of trade and social networks. It also holds the potential to facilitate the dating of undated documents, as when there is a person with a known lifespan who appears in an undated document. 
+The PGP datasets include information about people and places associated with the documentary \textit{geniza }corpus. The current version of the dataset includes \totalPeopleRecords\space people and \totalPlaceRecords\space places, and this data will continue to grow. Information about people and places will fuel the analysis of trade and social networks. It also holds the potential to facilitate the dating of undated documents, as when there is a person with a known lifespan who appears in an undated document. 
 
 People and places can be linked to documents in the database, and also to one another. But the datasets do not currently include those relationships, so they are not yet computationally rich in the way that the rest of the datasets are. The current exports include summary information about the number of related documents, but do not yet provide access to the rich information about the connections between them. We hope that future versions of the datasets will include more details on the rich information connecting people, places and documents.
 
