@@ -2,6 +2,8 @@ import io
 import csv
 from datetime import datetime
 
+import polars as pl
+
 from git import Repo
 
 repo = Repo("../pgp-metadata")
@@ -25,10 +27,9 @@ with open("pgp-dataset-history.csv", "w", encoding="utf-8-sig") as output:
         data_file = c.tree / "data/documents.csv"
         with io.BytesIO(data_file.data_stream.read()) as f:
             fp = io.StringIO(f.read().decode("utf-8-sig"))
-            reader = csv.DictReader(fp)
+            doc_df = pl.read_csv(fp)
             # for now, we just want to count number of documents
-            num_records = len([row for row in reader])
-            outcsv.writerow([commit_day, 'documents', num_records])
+            outcsv.writerow([commit_day, 'documents', doc_df.height])
 
     # for fragments - get total / total with images
     print("## fragments")    
@@ -45,17 +46,13 @@ with open("pgp-dataset-history.csv", "w", encoding="utf-8-sig") as output:
         data_file = c.tree / "data/fragments.csv"
         with io.BytesIO(data_file.data_stream.read()) as f:
             fp = io.StringIO(f.read().decode("utf-8-sig"))
-            reader = csv.DictReader(fp)
+            # earlier exports had a duplicate problem; ignore that and count unique
+            frag_df = pl.read_csv(fp).unique()
 
-            # count total number of fragments AND fragments with images
-            frag_total = 0
-            frag_img_total = 0
-            for row in reader:
-                frag_total += 1
-                if row.get('iiif_url'):
-                    frag_img_total += 1
-            outcsv.writerow([commit_day, 'fragments', frag_total])
-            outcsv.writerow([commit_day, 'fragment_images', frag_img_total])
+            # record total number of fragments AND fragments with images
+            outcsv.writerow([commit_day, 'fragments', frag_df.height])
+            outcsv.writerow([commit_day, 'fragment_images', 
+                frag_df.filter(pl.col("iiif_url").is_not_null()).height])
 
     # for footnotes - get # of digital editions, digital translations
     print("## transcriptions / translations")        
@@ -72,19 +69,51 @@ with open("pgp-dataset-history.csv", "w", encoding="utf-8-sig") as output:
         data_file = c.tree / "data/footnotes.csv"
         with io.BytesIO(data_file.data_stream.read()) as f:
             fp = io.StringIO(f.read().decode("utf-8-sig"))
-            reader = csv.DictReader(fp)
+            foonotes_df = pl.read_csv(fp)
 
-            # count total number of fragments AND fragments with images
-            transcription_total = 0
-            translation_total = 0
-            for row in reader:
-                doc_relation =row.get('doc_relation')
-                if doc_relation == "Digital Edition":
-                    transcription_total += 1
-                if doc_relation == "Digital Translation":
-                    translation_total += 1
-
-            outcsv.writerow([commit_day, 'transcriptions', transcription_total])
-            outcsv.writerow([commit_day, 'translations', translation_total])
+            # count digital editions & digital translations
+            outcsv.writerow([commit_day, 'transcriptions', 
+                foonotes_df.filter(pl.col("doc_relation").eq("Digital Edition")).height])
+            outcsv.writerow([commit_day, 'translations', 
+                foonotes_df.filter(pl.col("doc_relation").eq("Digital Translation")).height])
 
 
+    # people
+    print("## people")    
+    last_day = None
+    for c in repo.iter_commits(paths="data/people.csv"):
+        commit_date = datetime.fromtimestamp(c.committed_date)
+        # get just the day for comparing and reporting
+        commit_day = commit_date.date()
+        # just get data for one commit per day
+        if commit_day == last_day:
+            continue
+        last_day = commit_day
+
+        data_file = c.tree / "data/people.csv"
+        with io.BytesIO(data_file.data_stream.read()) as f:
+            fp = io.StringIO(f.read().decode("utf-8-sig"))
+            # ignore parsing errors (can't infer date range); we just want a count
+            people_df = pl.read_csv(fp, ignore_errors=True)
+
+            outcsv.writerow([commit_day, 'people', people_df.height])
+
+
+    # places
+    print("## places")    
+    last_day = None
+    for c in repo.iter_commits(paths="data/places.csv"):
+        commit_date = datetime.fromtimestamp(c.committed_date)
+        # get just the day for comparing and reporting
+        commit_day = commit_date.date()
+        # just get data for one commit per day
+        if commit_day == last_day:
+            continue
+        last_day = commit_day
+
+        data_file = c.tree / "data/places.csv"
+        with io.BytesIO(data_file.data_stream.read()) as f:
+            fp = io.StringIO(f.read().decode("utf-8-sig"))
+            places_df = pl.read_csv(fp)
+
+            outcsv.writerow([commit_day, 'places', places_df.height])
