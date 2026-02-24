@@ -4,7 +4,7 @@ from datetime import datetime
 
 from git import Repo
 
-repo = Repo(".")
+repo = Repo("../pgp-metadata")
 
 with open("pgp-dataset-history.csv", "w", encoding="utf-8-sig") as output:
     outcsv = csv.writer(output)
