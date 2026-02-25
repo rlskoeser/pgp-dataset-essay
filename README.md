@@ -47,9 +47,9 @@ included in the essay.  To run, use `jupyter-lab` or `jupyter-notebook`.
    - charts/document_types.pdf
 - 06-languages-scripts
    - charts/primary_language_upsetplot.pdf
-- 07-dates-calendars  [needs to be updated]
+- 07-dates-calendars  
    - charts/combined_dating.pdf
-   - charts/date_precision.pdf
+   - charts/date_precision.pdf (unused in essay)
    - charts/dated_docs_by_cal.pdf
 - 09-rate-of-change
    - charts/docs_last_modified.pdf
