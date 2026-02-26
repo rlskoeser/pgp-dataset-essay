@@ -267,7 +267,7 @@ In SQL, a many-to-many relationship requires an additional database table to tra
 \end{table}
 %\end{wraptable}
 
-The majority of PGP documents—\singleFragmentDocuments, or more than 95\%—are written on a single fragment. They are not joins, and so are simple from a data modeling perspective. There are \totalJoins\space documents that are joins, most of them between two fragments, and some among more than two fragments (see Table \ref{table:docs_per_numfrags}). A small set of outlier documents are correlated with an unusually large number of fragments — 32, 34 and 64 respectively; these are multipage documents, and they are all notebooks containing the legal archives of a courtroom.
+The majority of PGP documents—\singleFragmentDocuments, or more than 95\%—are written on a single fragment. They are not joins, and so are simple from a data modeling perspective. There are \totalJoins\hspace{0.25ex} documents that are joins, most of them between two fragments, and some among more than two fragments (see Table \ref{table:docs_per_numfrags}). A small set of outlier documents are correlated with an unusually large number of fragments — 32, 34 and 64 respectively; these are multipage documents, and they are all notebooks containing the legal archives of a courtroom.
 
 
 \begin{figure}[!hbt]
@@ -330,7 +330,7 @@ Descriptions are, by their nature, one place where the data’s unevenness emerg
 
 For example, one research team member, Alan Elbaum, wrote his master’s thesis on people’s descriptions of their physical ailments; his research resulted in a large number of tags related to illness. Since it is impossible to anticipate all the possible questions that future historians will bring to geniza documents, our goal is not to produce tags for some theoretical future researcher, but to flag themes or individuals of interest. Tags don’t, then, represent the current state of documentary geniza research; they are less like library subject headings and more PGP researchers’ post-it notes.
 
-The datasets contain \uniqueTags\space unique tags, of which \singletonTags\space are used only once. Some of the most commonly used ones are \texttt{\#account} (\taggedAccount\space documents, flagging a future attempt to decipher traders’ accounts); \texttt{\#communal} (\taggedCommunal\space documents, reflecting the organizational levels of the Jewish community); \texttt{\#illness} and \texttt{\#illness letter 969-1517}  (\taggedIllness\space and \taggedIllnessLetter\space documents, respectively). 
+The datasets contain \uniqueTags\hspace{0.25ex} unique tags, of which \singletonTags\hspace{0.25ex} are used only once. Some of the most commonly used ones are \texttt{\#account} (\taggedAccount\hspace{0.25ex} documents, flagging a future attempt to decipher traders’ accounts); \texttt{\#communal} (\taggedCommunal\hspace{0.25ex} documents, reflecting the organizational levels of the Jewish community); \texttt{\#illness} and \texttt{\#illness letter 969-1517}  (\taggedIllness\hspace{0.25ex} and \taggedIllnessLetter\hspace{0.25ex} documents, respectively). 
 
 \subsection{Languages and Scripts}
 
@@ -398,7 +398,7 @@ When a document explicitly notes the date, it is called “date on document” a
 \end{figure}
 
 
-The PGP currently has \totalDatedDocs\space dated documents (\percentDatedDocs\space of all documents). Of these, \totalDateOnDoc\space have an explicit date and \totalInferredDate\space have been dated inferentially. Since dates are usually not precisely known, the range of possible dating can be quite large (Table \ref{table:date-precision}, Figure \ref{fig:documents-over-time}).
+The PGP currently has \totalDatedDocs\hspace{0.25ex} dated documents (\percentDatedDocs\hspace{0.25ex} of all documents). Of these, \totalDateOnDoc\hspace{0.25ex} have an explicit date and \totalInferredDate\hspace{0.25ex} have been dated inferentially. Since dates are usually not precisely known, the range of possible dating can be quite large (Table \ref{table:date-precision}, Figure \ref{fig:documents-over-time}).
 
 \begin{table}
 \begin{center}
@@ -482,7 +482,7 @@ Using IIIF has another advantage: it enables PGPv4 to display the images of mult
 
 \subsection{People and Places}
 
-The PGP datasets include information about people and places associated with the documentary \textit{geniza }corpus. The current version of the dataset includes \totalPeopleRecords\space people and \totalPlaceRecords\space places, and this data will continue to grow. Information about people and places will fuel the analysis of trade and social networks. It also holds the potential to facilitate the dating of undated documents, as when there is a person with a known lifespan who appears in an undated document. 
+The PGP datasets include information about people and places associated with the documentary \textit{geniza }corpus. The current version of the dataset includes \totalPeopleRecords\hspace{0.25ex} people and \totalPlaceRecords\hspace{0.25ex} places, and this data will continue to grow. Information about people and places will fuel the analysis of trade and social networks. It also holds the potential to facilitate the dating of undated documents, as when there is a person with a known lifespan who appears in an undated document. 
 
 People and places can be linked to documents in the database, and also to one another. But the datasets do not currently include those relationships, so they are not yet computationally rich in the way that the rest of the datasets are. The current exports include the number of related documents. We hope that future versions of the datasets will include more details on the rich information connecting people, places and documents.
 
