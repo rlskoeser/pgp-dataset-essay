@@ -16,7 +16,7 @@
 %#DeclareUnicodeCharacter{02BF}{‘}
 
 % anonymize; switch true to false to disable
-\usepackage[true]{anonymous-acm}
+\usepackage[false]{anonymous-acm}
 
 \title{Princeton Geniza Project datasets\footnotemark}
 \authoranon{\author{Rebecca Sutton Koeser and Marina Rustow\footnotemark}}
@@ -35,48 +35,56 @@
 
 \bibliography{references.bib} 
 
-% TODO: confirm that total joins are being calculated correctly
 %% numbers from data
-\def\totalDocuments{35,194}
-\def\singleFragmentDocuments{33,644}
-\def\totalJoins{1,550}
-\def\totalLetter{11,212}
-\def\totalLegalDocument{7,868}
-\def\totalListOrTable{5,415}
-\def\totalUnknown{4,175}
-\def\totalLiteraryText{2,338}
-\def\totalStateDocument{2,096}
-\def\totalParaliteraryText{1,130}
-\def\totalCreditInstrumentOrPrivateReceipt{554}
-\def\totalLegalQueryOrResponsum{401}
+\def\totalDocuments{35,855}
+\def\singleFragmentDocuments{34,237}
+\def\totalJoins{1,618}
+\def\totalLetter{11,281}
+\def\totalLegalDocument{8,096}
+\def\totalListOrTable{5,595}
+\def\totalUnknown{4,005}
+\def\totalLiteraryText{2,493}
+\def\totalStateDocument{2,209}
+\def\totalParaliteraryText{1,196}
+\def\totalCreditInstrumentOrPrivateReceipt{568}
+\def\totalLegalQueryOrResponsum{407}
 \def\totalInscription{5}
-\def\uniqueTags{2,674}
-\def\taggedDimme{1640}
-\def\taggedAccount{759}
+\def\uniqueTags{2,695}
+\def\taggedDimme{1631}
+\def\taggedAccount{755}
 \def\taggedCommunal{751}
-\def\taggedIllness{691}
-\def\taggedIllnessLetter{648}
-\def\taggedArabicScript{629}
+\def\taggedIllness{694}
+\def\taggedIllnessLetter{651}
+\def\taggedArabicScript{622}
 \def\singletonTags{1,064}
-\def\totalLangauges{54}
-\def\documentsNoLang{6,161}
-\def\documentsAnyLang{29,033}
-\def\documentsOneLang{22,443}
-\def\documentsMultiLang{6,590}
-\def\percentDocsMultiLang{22.7\%}
-\def\percentDocsMonoLang{77.3\%}
-\def\totalDatedDocs{4,455}
-\def\percentDatedDocs{12.7\%}
-\def\totalDateOnDoc{4,127}
-\def\totalInferredDate{328}
-\def\totalPeopleRecords{1333}
-\def\totalPlaceRecords{409}
+\def\totalLangauges{55}
+\def\documentsNoLang{5,964}
+\def\documentsAnyLang{29,891}
+\def\documentsOneLang{23,155}
+\def\documentsMultiLang{6,736}
+\def\percentDocsMultiLang{22.5\%}
+\def\percentDocsMonoLang{77.5\%}
+\def\totalDatedDocs{5,961}
+\def\percentDatedDocs{16.6\%}
+\def\totalDateOnDoc{4,679}
+\def\totalInferredDate{1,282}
+\def\totalPeopleRecords{1802}
+\def\totalPlaceRecords{486}
 
 \begin{document}
 
 \maketitle
 \footnotetext{Supporting data and code available at \textanon{https://github.com/rlskoeser/pgp-dataset-essay}{https://anonymous.4open.science/r/pgp-dataset-essay-9036}}
 \footnotetext{\textanon{The authors would like to thank Mohamed Abdellatif, Amel Bensalim, Rachel Richman, Ksenia Ryzhova, Laure Thompson and Jeri Wieringa for their helpful comments and suggestions on previous drafts of this essay, and for Ksenia Ryzhova for her logistical support during the final stages of completion.}{<Acknowledgements omitted for peer review>}}
+
+\begin{center}
+    \textbf{Abstract}
+
+\begin{quote}
+The Princeton Geniza Project (PGP) is a database devoted to the documentary sources of the Cairo Geniza. Beginning in 2020, as the database approached its thirty-fifth anniversary, a partnership between Princeton Geniza Lab (PGL) and the Center for Digital Humanities (CDH) launched a major overhaul of the database, updating and connecting previously siloed data and modernizing data formats, workflows, and interfaces. Now, for the first time, datasets have been published from this long-running project, with the hope of bringing the materials to a wider community of digital and computational humanists and making them more tractable. This essay describes the project’s history, explains the structure of the data, and provides context for their nuances, unevenness, and gaps. We provides an overview of the data, including the relationship between fragments and documents; descriptive metadata (types, descriptions and tags); languages and scripts; dates and calendars; and scholarship records including transcriptions and translations. Finally, we share our analysis of the rate of change of the data and plans for publishing versions. This essay is intended both as a reference for anyone who wants to work with the data and inspiration to encourage interest in this fascinating, rich data.    
+\end{quote}
+    \vspace{0.9cm}    
+\end{center}
 
 \section{Introduction}
 
@@ -99,7 +107,7 @@ Historical documents from the Cairo Geniza—the “documentary \textit{geniza}�
 \subsection{The Princeton Geniza Project}
 
 The sheer volume of new information \textit{geniza} documents offer is uncommon in premodern history. But precisely this abundance—and the fact that the texts are often incomplete and linguistically recondite—makes special demands of scholars. That’s where digitization comes in. 
-Early in the personal computing era, in 1986, a Princeton-based team began digitizing transcriptions of \textit{geniza} documents to make them searchable. This was the birth of the Princeton Geniza Project (PGP), a database devoted to the documentary sources of the Cairo Geniza. In 2020, as the database approached its thirty-fifth anniversary, the authors launched a major overhaul of the database. Now, as it approaches its fortieth, we are publishing its vastly expanded data in the hope of bringing them to a wider community of digital and computational humanists and making them more tractable.
+Early in the personal computing era, in 1986, a Princeton-based team began digitizing transcriptions of \textit{geniza} documents to make them searchable. This was the birth of the Princeton Geniza Project (PGP), a database devoted to the documentary sources of the Cairo Geniza. In 2020, as the database approached its thirty-fifth anniversary, the \textanon{authors}{project leaders} launched a major overhaul of the database. Now, as it approaches its fortieth, we are publishing its vastly expanded data in the hope of bringing them to a wider community of digital and computational humanists and making them more tractable.
 
 Although the PGP is a long-running project, this is the first time its data have been published comprehensively as a dataset, or separately from the interface for accessing the documents. This essay therefore describes the project’s history, explains the structure of the data and provides some context for their nuances and unevenness. We intend it as a frame of reference for anyone who wants to work with the data. 
 
@@ -434,7 +442,7 @@ Inferred & 328 & 80 & 700 \\
 \end{table}
 
 
-Most of the surviving dates on documents use non-Gregorian calendars. These include Jewish (\textit{anno mundi}),  Seleucid, Islamic (\textit{hijrī}) and the Egyptian fiscal (\textit{kharājī}) calendars. Months include the Jewish, Coptic and Islamic months, and sometimes a single date will mix and match calendars.\footnote{For instance, a document dated “23 Ḥeshvan (Shawwāl) 521 AH”;  the description notes that “it is unusual but not unheard of to combine Hebrew months with the Hijrī calendar” \autocite{noauthor_legal_1127} .} 
+Most of the surviving dates on documents use non-Gregorian calendars. These include Jewish (\textit{anno mundi}),  Seleucid, Islamic (\textit{hijrī}) and the Egyptian fiscal (\textit{kharājī}) calendars (Figure \ref{fig:docs_by_calendar}). Months include the Jewish, Coptic and Islamic months, and sometimes a single date will mix and match calendars.\footnote{For instance, a document dated “23 Ḥeshvan (Shawwāl) 521 AH”;  the description notes that “it is unusual but not unheard of to combine Hebrew months with the Hijrī calendar” \autocite{noauthor_legal_1127} .} 
 
 Starting with version 4.5 (June 2022), PGPv4 automatically parses and converts Seleucid, \textit{hijrī} and \textit{anno mundi} dates to Common Era dates (Julian before 1583, Gregorian after).\footnote{Calendar conversion is implemented using the Python \texttt{convertdate} library, with additional logic to handle the Seleucid calendar.} Converting to a common calendar enables documents to be sorted, filtered, and compared in a unified chronology, and to be understood by non-expert audiences.\footnote{Before built-in support for automatic conversion, researchers converted dates manually using online tools such as https://www.muqawwim.com.} 
 
@@ -442,7 +450,7 @@ Starting with version 4.5 (June 2022), PGPv4 automatically parses and converts S
   \centering
   \includegraphics[width=\textwidth]{charts/dated_docs_by_cal.pdf}
   \caption{Dated documents by calendar.}
-  \label{fig:docs_dating_combined}
+  \label{fig:docs_by_calendar}
 \end{figure}
 
 Like the PGPv4 web interface, the datasets provide both the original calendar and the converted dates, since they are useful for different kinds of analysis. In the datasets, the “date on document” is comprised of three fields: original date as written, original calendar, and a standardized date. Inferred dates are similarly comprised of multiple fields: a display field with textual or human-readable information, a standardized date field, a rationale documenting the basis for the inferred date and an optional notes field to provide more information about the dating. In both cases, standardized date fields use Extended Date Time Format (EDTF) for a single date or date range.
