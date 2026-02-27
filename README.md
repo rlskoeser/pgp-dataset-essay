@@ -72,3 +72,6 @@ Use pandoc to generate a Word document with the following options:
 ```console
 pandoc -o pgp_dataset_essay.docx -t docx+native_numbering main.tex --verbose  --bibliography references.bib --citeproc
 ```
+
+Or use [just](https://github.com/casey/just) to run the same command: `just docx`
+
