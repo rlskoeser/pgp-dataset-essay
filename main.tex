@@ -18,7 +18,7 @@
 \title{Princeton Geniza Project datasets}
 \author{Rebecca Sutton Koeser and Marina Rustow}
 
-\date{February 2026}
+%\date{February 2026}
 
 \usepackage[
     backend=biber,
@@ -118,7 +118,7 @@ The larger aim of our efforts was to accelerate research on the documentary \tex
 
 Any good engineering tool helps not only to improve data interfaces, but also to streamline team workflows. The project has allowed team members to share their research with each other and with the public in real time, and also to expand the pool of researchers to include undergraduates and even some high school students, as well as colleagues from other institutions. 
 
-Although PGPv4 is backed by a relational database, it was always part of the plan to allow for data exports in a standardized format. Researchers on the PGP team were already accustomed to working with the project data in a shared spreadsheet, and they often made their own datasets as they gathered evidence. This publication of the data expands that capability, providing different modes and scales of access to allow for what Ryan Cordell summarizes as “zoomable, scalable, or macroscopic reading” and analysis (\citeyear{cordell_what_2017}).
+Although PGPv4 is backed by a relational database, it was always part of the plan to allow for data exports in a standardized format. Researchers on the PGP team were already accustomed to working with the project data in a shared spreadsheet, and they often made their own datasets as they gathered evidence. This publication of the data expands that capability, providing different modes and scales of access to allow for what Ryan Cordell summarizes as “zoomable, scalable, or macroscopic reading” and analysis \autocite{cordell_what_2017}.
 
 \section{The History of the PGP and Its Data}
 
@@ -237,9 +237,9 @@ Fragments are identified by the shelfmarks assigned to them by their holding ins
 \begin{figure}[!hbt]
   \includegraphics[width=1\linewidth]{db-diagrams/pgp v4.19 documents.png}
   \centering
-  \caption{This database diagram shows the many-to-many relationship between documents and fragments in the PGPv4 database.
+  \caption{This database diagram shows the many-to-many relationship between documents and fragments and other associated information in the PGPv4 database.
     \small
- (Generated from models in  PGP Django codebase v4.19; Translation text fields are omitted for simplicity).}
+ (Generated from models in  PGP Django codebase v4.19; translation text fields are omitted for simplicity).}
   \label{fig:pgpv4_db_documents}
 \end{figure}
 
@@ -309,7 +309,7 @@ Each document entry in the database includes three main metadata components: typ
 \begin{figure}[!hbt]
   \centering
   \includegraphics[width=1\linewidth]{charts/document_types.pdf}
-\caption{A chart of documents by type shows the distribution across these controlled types; the most common types are letters and legal documents.}
+\caption{A chart of documents by type shows the distribution of documents across this controlled taxonomy; the most common types are letters and legal documents.}
   \label{fig:document_types}
 \end{figure}
 
@@ -375,7 +375,7 @@ Because the authors of Geniza documents often employed a mix of languages, our d
   \includegraphics[width=0.8\textwidth]{charts/primary_language_upsetplot.pdf}
   \caption{An UpSet plot of documents by primary languages shows the distribution and combination of languages across the collection (limited to  languages that occur at least 200 times).
     \small
-    The upper bar chart shows the number of documents for different groups of languages and language combinations; the bar chart at left shows the size of each language category across all groups. The matrix provides a visual indicator of the categories at left and the combinations represented in the upper bar chart. For more on UpSet plots and the challenges of visualizing overlapping combinations with more than four sets, refer to Koeser's \citetitle{koeser_visualizing_2020}.
+    The upper bar chart shows the number of documents for different groups of languages and language combinations; the bar chart at left shows the size of each language category across all groups. The matrix provides a visual indicator of the categories at left and the combinations represented in the upper bar chart. For more on UpSet plots and the challenges of visualizing overlapping combinations with more than four sets, read ``Visualizing the Collections'' \autocite{koeser_visualizing_2020}.
     }
   \label{fig:lang_combination_upset_plot}
 \end{figure}
@@ -418,7 +418,7 @@ Inferred & 1304 & 46 & 701 \\
 
 Most of the surviving dates on documents use non-Gregorian calendars. These include Jewish (\textit{anno mundi}),  Seleucid, Islamic (\textit{hijrī}) and the Egyptian fiscal (\textit{kharājī}) calendars (Figure \ref{fig:docs_by_calendar}). Months include the Jewish, Coptic and Islamic months, and sometimes a single date will mix and match calendars.\footnote{For instance, a document dated “23 Ḥeshvan (Shawwāl) 521 AH”;  the description notes that “it is unusual but not unheard of to combine Hebrew months with the Hijrī calendar” \autocite{noauthor_legal_1127} .} 
 
-Starting with version 4.5 (June 2022), PGPv4 automatically parses and converts Seleucid, \textit{hijrī} and \textit{anno mundi} dates to Common Era dates (Julian before 1583, Gregorian after).\footnote{Calendar conversion is implemented using the Python \texttt{convertdate} library, with additional logic to handle the Seleucid calendar.} Converting to a common calendar enables documents to be sorted, filtered, and compared in a unified chronology, and to be understood by non-expert audiences.\footnote{Before built-in support for automatic conversion, researchers converted dates manually using online tools such as https://www.muqawwim.com.} 
+Starting with version 4.5 (June 2022), PGPv4 automatically parses and converts Seleucid, \textit{hijrī} and \textit{anno mundi} dates to Common Era dates (Julian before 1583, Gregorian after).\footnote{Calendar conversion is implemented using the Python \texttt{convertdate} library, with additional logic to handle the Seleucid calendar.} Converting to a common calendar enables documents to be sorted, filtered, and compared in a unified chronology, and to be understood by non-expert audiences.\footnote{Before built-in support for automatic conversion, researchers converted dates manually using online tools such as Theodore Beers' https://www.muqawwim.com.} 
 
 \begin{figure}[!hbt]
   \centering
@@ -456,14 +456,14 @@ Blog & 1 & 1 \\
 
 All the more important, then, for the database to distinguish clearly between existing and new research. The PGP builds on a substantial scholarly record of both published and unpublished materials, most notably but not solely Goitein’s transcriptions, translations and index cards. (Goitein produced so many thousands of these that we had to split them into pseudo-volumes in our documentation.) Other scholarship in the database includes books, book chapters, articles, dissertations and blog posts, as well as unpublished transcriptions by Goitein’s students, their students and their students’ students, down to current project researchers (see Table \ref{table:scholarship_sources}). 
 
-PGPv4 tracks these research outputs—and unpublished products of scholarly research— by associating documents with "footnotes," a solution adapted from previous projects developed at CDH (\citeyear{koeser_princeton-cdhmep-django_2022, koeser_derrida-django_2021}).\footnote{The CDH footnote module was originally inspired by Jean Bauer’s approach to database footnotes, which were used to allow for conflicting evidence, indicating “whether or not that source supports the information in the record” (\citeyear{noauthor_tales_2012}).} Footnotes are implemented with a Django “Generic Foreign Key,” which uses a combination of content type (e.g., document, person, place) and object identifier (e.g., document PGPID, or person or place database id) to link to any record in the database. This builds on work from the \textit{Shakespeare and Company Project}, which used a similar approach to link book-borrowing data to the archival sources from which the information was drawn \autocite[18]{kotin_shakespeare_2022}. For PGPv4, we augmented the footnotes with a document relation field that indicates what information the source provides for this specific document—currently, transcription (“Edition” or “Digital Edition”), translation and/or discussion. In the PGP datasets, the \texttt{sources} data are linked to scholarship records that provide citation information and the number of footnotes associated with that source.
+PGPv4 tracks these research outputs—and unpublished products of scholarly research— by associating documents with "footnotes," a solution adapted from previous projects developed at CDH \autocite{koeser_princeton-cdhmep-django_2022, koeser_derrida-django_2021}.\footnote{The CDH footnote module was originally inspired by Jean Bauer’s approach to database footnotes, which were used to allow for conflicting evidence, indicating “whether or not that source supports the information in the record” \autocite{noauthor_tales_2012}.} Footnotes are implemented with a Django “Generic Foreign Key,” which uses a combination of content type (e.g., document, person, place) and object identifier (e.g., document PGPID, or person or place database id) to link to any record in the database. This builds on work from the \textit{Shakespeare and Company Project}, which used a similar approach to link book-borrowing data to the archival sources from which the information was drawn \autocite[18]{kotin_shakespeare_2022}. For PGPv4, we augmented the footnotes with a document relation field that indicates what information the source provides for this specific document—currently, transcription (“Edition” or “Digital Edition”), translation and/or discussion. In the PGP datasets, the \texttt{sources} data are linked to scholarship records that provide citation information and the number of footnotes associated with that source.
 
 \subsection{Transcriptions and Translations}
 Transcriptions have long been the gold standard in documentary \textit{geniza} research. The texts are often difficult to read and contain unique, historically valuable information not found in other historical repositories. Every word is precious and worth the effort to decipher and preserve. Translations are equally valuable, resolving ambiguities in the original and making sense of unclear syntax. And of course they make the material available to a wider pool of researchers.
 
 The PGPv4 database stores and manages transcriptions and translations in the W3C annotation format with minimal HTML formatting. Annotations are linked to images when they are available. The dataset exports include a plain-text version of the transcription and translation content in the content field of the \texttt{footnotes} data. The document relations “Digital Edition” and “Digital Translation” indicate that a record has a  transcription or translation available. Footnotes that note “Edition” or “Translation” indicate that there is a scholarly source containing a transcription or translation of a document, but the content is not yet available in PGPv4. The language of the translation can be determined based on the language of the associated source, typically English and Hebrew.
 
-Researchers should be mindful that transcriptions and translations include editorial symbols such as square brackets, parentheses, curly brackets, ellipses and double brackets. These are customary in philological transcriptions of historical texts. Over the past century, a set of best practices has evolved for scholarly transcription known as the Leiden conventions. (For instance, square brackets enclose an editor’s suggested reconstruction of missing text, as when the manuscript is torn, faded or abraded.)\footnote{https://en.wikipedia.org/wiki/Leiden\_Conventions} In 2021, the PGP team developed a more streamlined version of the Leiden conventions for new transcriptions\footnote{Refer to \href{https://docs.google.com/document/d/e/2PACX-1vR8kR4zZdnDZXjoLrYrABZn58PRyzrKfEiixQzE9vAzNfzI4Enxs0jU9KO5rTdiH1ZMTPwfqm31mFuX/pub}{Transcription History and Conventions}}. (Some of the older printed transcriptions included in PGP data follow a slightly different version of the Leiden conventions and not all have been brought into line with new standards.) Computational work on transcription content will likely require removing these indicators as a preprocessing step for most use cases. That said, indications of missing or inferred text may also provide an interesting object of study.
+Researchers should be mindful that transcriptions and translations include editorial symbols such as square brackets, parentheses, curly brackets, ellipses and double brackets. These are customary in philological transcriptions of historical texts. Over the past century, a set of best practices has evolved for scholarly transcription known as the Leiden conventions. (For instance, square brackets enclose an editor’s suggested reconstruction of missing text, as when the manuscript is torn, faded or abraded.)\footnote{https://en.wikipedia.org/wiki/Leiden\_Conventions} In 2021, the PGP team developed a more streamlined version of the Leiden conventions for new transcriptions.\footnote{Refer to \href{https://docs.google.com/document/d/e/2PACX-1vR8kR4zZdnDZXjoLrYrABZn58PRyzrKfEiixQzE9vAzNfzI4Enxs0jU9KO5rTdiH1ZMTPwfqm31mFuX/pub}{Transcription History and Conventions https://docs.google.com/document/d/e/2PACX-1vR8kR4zZdnDZXjoLrYrABZn58PRyzrKfEiixQzE9vAzNfzI4Enxs0jU9KO5rTdiH1ZMTPwfqm31mFuX/pub}} (Some of the older printed transcriptions included in PGP data follow a slightly different version of the Leiden conventions and not all have been brought into line with new standards.) Computational work on transcription content will likely require removing these indicators as a preprocessing step for most use cases. That said, indications of missing or inferred text may also provide an interesting object of study.
 
 \subsection{Images of Fragments}
 
