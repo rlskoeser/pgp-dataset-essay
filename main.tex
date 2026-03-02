@@ -207,20 +207,21 @@ But doing so required us to walk away from a longstanding informational hierarch
 
 We managed to sidestep this longstanding hierarchy and acknowledge the importance of both the fragment and the document, depending on the context, by developing a relational data model. The fragment is what you request when you go to a library or search for a digital image; the document is what you transcribe when you create a text edition. PGP needed to account for both, and for the relationship between them.\footnote{It also serves as a powerful opportunity to correct cognitive biases in a field that had long been dependent on printed editions of manuscript texts \autocite{rustow_fragmentology_2024}.} 
 
-The many-to-many relationship between documents and fragments is but one example of the choices governing our underlying data structure. It is a representative example in that it demonstrates the necessity of understanding something about geniza documents and the history of research on them in order to work with the data. In the next part of the essay, we shift from the history of the project and the challenges that drove its software development to the nature and structure of the current PGP datasets.
-
-\section{The nature and structure of the datasets}
-
-The process of rebuilding the PGP began in July 2020 and is now complete—a five-and-a-half-year process from start to finish. But the rewards came long before the work wrapped up. In May 2021, we launched the new admin interface. A good research infrastructure should encourage and inspire research, and ours quickly did just that, accelerating the expansion of the data. 
-
-The PGP datasets that the rest of this essay describes are exported from the PGPv4 web application as multiple flat, tabular data files.\footnote{Numbers and charts are based on the 1.1 version of the datasets \autocite{rustow_princeton_2026}.} The application is implemented in Python with the Django framework, and is backed by a relational database (PostgreSQL). Familiarity with the structure of the underlying database and choices made in modeling the data should make it easier to understand and work with and recombine the exported data. 
-
 \begin{figure}[!ht]
   \includegraphics[width=\textwidth]{db-diagrams/pgpv4_dbdiagram_import.pdf}
   \centering
   \caption{An annotated version of a preliminary database diagram from project planning documents from October 2020 shows the proposed data migration from the PGPv3 metadata spreadsheet.}
   \label{fig:pgpv4_dbdiagram}
 \end{figure}
+
+
+The many-to-many relationship between documents and fragments (Figure \ref{fig:pgpv4_dbdiagram}) is but one example of the choices governing our underlying data structure. It is a representative example in that it demonstrates the necessity of understanding something about geniza documents and the history of research on them in order to work with the data. In the next part of the essay, we shift from the history of the project and the challenges that drove its software development to the nature and structure of the current PGP datasets.
+
+\section{The nature and structure of the datasets}
+
+The process of rebuilding the PGP began in July 2020 and is now complete—a five-and-a-half-year process from start to finish. But the rewards came long before the work wrapped up. In May 2021, we launched the new admin interface. A good research infrastructure should encourage and inspire research, and ours quickly did just that, accelerating the expansion of the data. 
+
+The PGP datasets that the rest of this essay describes are exported from the PGPv4 web application as multiple flat, tabular data files.\footnote{Numbers and charts are based on the 1.1 version of the datasets \autocite{rustow_princeton_2026}.} The application is implemented in Python with the Django framework, and is backed by a relational database (PostgreSQL). Familiarity with the structure of the underlying database and choices made in modeling the data should make it easier to understand and work with and recombine the exported data. 
 
 
 \subsection{Fragments and Documents}
@@ -418,7 +419,7 @@ Starting with version 4.5 (June 2022), PGPv4 automatically parses and converts S
 \begin{figure}[!hbt]
   \centering
   \includegraphics[width=\textwidth]{charts/dated_docs_by_cal.pdf}
-  \caption{Documents are dated by a variety of calendars.}
+  \caption{Documents are dated according multiple different calendars and converted to Common Era dates for use and analysis together.}
   \label{fig:docs_by_calendar}
 \end{figure}
 
@@ -431,7 +432,7 @@ One of the driving principles of PGP was that any encounter of a human mind with
 %\begin{wraptable}{r}{2.5in}
 \begin{table}
 \begin{center}
-\caption{PGP draws content from a variety of scholarship sources.}
+\caption{PGP draws content from a variety of scholarship sources, and includes a substantial number of unpublished transcriptions.}
 \label{table:scholarship_sources}
 \begin{tabular}{lrr}
 \toprule
@@ -522,7 +523,7 @@ An ongoing partnership between Rustow and Daniel Stökl Ben-Ezra \autocite{noaut
 
 As the amount of full-text content increases, so, too, will the data’s research potential. The need will also become more acute to leverage scalable computational methods, including natural language processing (NLP), machine learning and multimodal language models. One current effort, led by the Princeton Geniza Lab’s research software engineer, Mohamed Abdellatif, is adapting and refining an existing solution for transliterating Judaeo-Arabic to Arabic \autocite{weisberg_mitelman_code-switching_2024} in order to applying it to PGP transcriptions of Judaeo-Arabic texts to make them more broadly accessible to the Arabic-reading public \autocite{abdellatif_machine_2025}. This effort will also make the content more computationally accessible, since transliteration will allow researchers to work with the material using existing Arabic language models and other NLP tools.
 
-Other projects have also been inspired by PGPv4. Koeser is now leading a collaboration to develop the Python library \texttt{undate} for reasoning with uncertain and partially known dates with mixed precision and calendars \autocite{koeser_undate_2024, koeser_undate_2025}. This library incorporates and generalizes PGPv4’s solutions for calendar conversion and ambiguous dates, with improved parsing and temporal logic, and may eventually be reintegrated into PGPv4 to improve date handling. It has the potential to make it easier to work with the dates in the PGP datasets and others like them.
+Other projects have also been inspired by PGPv4. Koeser is now leading a collaboration to develop the Python library \texttt{undate} for reasoning with uncertain and partially known dates with mixed precision and calendars \autocite{koeser_undate_2025, koeser_undate_2026}. This library incorporates and generalizes PGPv4’s solutions for calendar conversion and ambiguous dates, with improved parsing and temporal logic, and may eventually be reintegrated into PGPv4 to improve date handling. It has the potential to make it easier to work with the dates in the PGP datasets and others like them.
 
 Other possibilities include mining specific subsets of PGP materials for information, such as epistolary networks from letters, or analysis of the kinds of legacies inherited through wills. The availability of images in combination with descriptions and transcriptions offers possibilities for multimodal analysis, such as clustering documents visually to identify similar scribal characteristics or individual hands, or identifying other unsuspected commonalities across the materials. PGP images bear further analysis, and torn fragments could be digitally restored either within the PGPv4 or based on future versions of the dataset that provide access to document-centric arrangements of images. Analysis of PGP data in combination with other datasets and sources, such as the historic coins identified by Dudley and Elbaum or the historical places in the World Historical Gazetteer, offers yet more opportunities for new discoveries.
 
