@@ -39,6 +39,7 @@ included in the essay.  To run, use `jupyter-lab` or `jupyter-notebook`.
    - charts/docs_frags_2up.pdf
    - charts/documents_per_num_frags.pdf
    - charts/fragments_with_num_docs.pdf
+    - Table 1 (Fragments and Documents; LaTex table generated in the notebook)   
 - 02-documents-over-time
    - charts/docs_over_time.pdf
 - 03-metadata-available
