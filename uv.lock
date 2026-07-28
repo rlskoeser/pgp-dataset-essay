@@ -27,6 +27,19 @@ wheels = [
 ]
 
 [[package]]
+name = "altair-upset"
+version = "0.3.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "altair" },
+    { name = "pandas" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ba/fd/281d369210e4b88433009068fb59991453bc4f7b4956459397b9eb6700d6/altair_upset-0.3.0.tar.gz", hash = "sha256:1e785c14772bc38e6b5a1c8a423461999b3d62168127feff0a0e84b7702e62a3", size = 848929, upload-time = "2025-01-19T14:38:56.054Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/93/97/9818f76010403f7382988509ec24d85e5ebdc039f71b37547ff5deb2302e/altair_upset-0.3.0-py3-none-any.whl", hash = "sha256:105ac71ff19434bc252fb2a0ea48f9b016266abf01f8de8cbb7fa14458cc5b93", size = 9905, upload-time = "2025-01-19T14:38:53.677Z" },
+]
+
+[[package]]
 name = "anyio"
 version = "4.12.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1626,6 +1639,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "altair" },
+    { name = "altair-upset" },
     { name = "gitpython" },
     { name = "jupyterlab" },
     { name = "nbmanips" },
@@ -1642,6 +1656,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "altair", specifier = ">=5.5.0" },
+    { name = "altair-upset", specifier = ">=0.3.0" },
     { name = "gitpython", specifier = ">=3.1.46" },
     { name = "jupyterlab", specifier = ">=4.4.5" },
     { name = "nbmanips", specifier = ">=2.1.3" },
